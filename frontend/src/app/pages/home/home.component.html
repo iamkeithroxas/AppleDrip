@@ -1,0 +1,105 @@
+<div class="row">
+    <div class="col-md-7 feed">
+        <div class="p-2 d-flex justify-content-between feed-header">
+            <div class="p-0">
+                <h5>Home</h5>
+            </div>
+            <div class="p-0">
+                <a type="button"><i class="fa fa-rotate-right"></i></a>
+            </div>
+        </div>
+        <div class="feed-body">
+            <div class="create-post-area">
+                <div class="create-post-header d-flex flex-row">
+                    <div class="p-1">
+                        <img [width]="50" [height]="50" src="https://cdn-icons-png.flaticon.com/512/219/219983.png" alt="">
+                    </div>
+                    <div class="p-1 pt-3">
+                        <p class="hb-1">Renz Radovan</p>
+                    </div>
+                </div>
+                <div class="create-post-body">
+                    <!-- <div class="input-area" (focus)="postAreaFocus()" (focusout)="postAreaFocusOut()"  contenteditable="true">
+                                {{post}}
+                            </div> -->
+                    <textarea class="input-area " name="post" [(ngModel)]="post" (keyup)="CheckPostContent($event)" placeholder="What's your thought?"></textarea>
+                    <div class="uploadDiv" *ngIf="hasImage">
+                        <div><a type="button" class="float-end" (click)="removePrevImage()"><i class="fa fa-times"></i></a></div>
+                        <img [src]="ImageSrc" width="100%" height="auto" alt="">
+                    </div>
+                </div>
+                <div class="d-flex flex-row">
+                    <div class="tools d-flex flex-column">
+                        <div>
+                            <!-- <a type="button"><i class="fa fa-image"></i></a> -->
+                            <input type="file" #image_upload id="upload" (change)="getImage($event)" hidden/>
+                            <label for="upload" class="fileup"><i class="fa fa-image"></i></label>
+                        </div>
+                    </div>
+                    <div class="create-post-bottom">
+                        <button class="btn btn-primary" (click)="createPost()" [disabled]="postButton">Post</button>
+                    </div>
+                </div>
+
+            </div>
+            <div class="feed-container" *ngFor="let feed of feeds">
+                <div class="d-flex flex-column posts">
+                                <div class="post-header d-flex flex-row">
+                                    <div class="p-1">
+                                        <img [width]="50" [height]="50" src="https://cdn-icons-png.flaticon.com/512/219/219983.png" alt="">
+                                    </div>
+                                    <div class="p-1">
+                                        <div class="d-flex flex-row">
+                                            <div class="p-0 me-auto">
+                                                <p class="hb-1">{{feed.user_id}}</p>
+                                            </div>
+                                            <div class="ps-1">
+                                                <p class="lt-1">{{feed.created_at | date: 'h:mm a'}}</p>
+                                            </div>
+                                        </div>
+                        
+                                        <p class="post-content">
+                                            {{feed.content}}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="post-body d-flex flex-column" *ngIf="feed.image != null">
+                                    <div class="p-0 image-content">
+                                        <img class="image-post" src="{{feed.image}}"
+                                            alt="">
+                                    </div>
+                                </div>
+                                
+                            </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-5 sub-section">
+        <div class="mt-3 fade-container-list">
+            <div class="fd-header">
+                <h4>Friends</h4>
+            </div>
+            <div class="fd-body">
+                <div class="p-1">
+                    <p>Keith Roxas</p>
+                </div>
+                <div class="p-1">
+                    <p>Vincent Guerzon</p>
+                </div>
+            </div>
+        </div>
+        <div class="mt-3 fade-container-list">
+            <div class="fd-header">
+                <h4>Groups</h4>
+            </div>
+            <div class="fd-body">
+                <div class="p-1">
+                    <p>It Experts</p>
+                </div>
+                <div class="p-1">
+                    <p>Crypto World</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
