@@ -2,30 +2,54 @@ import { Component } from '@angular/core';
 import { PostService } from '../service/post.service'
 import { Post } from '../model/post';
 import { SafeUrl, DomSanitizer } from '@angular/platform-browser';
+import { JwtModule, JwtHelperService } from '@auth0/angular-jwt';
+import { UserProfile} from '../model/user-profile'
+import { FeedModel } from '../model/feed.model'
+import { AuthService } from '../service/auth.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
 })
+
 export class HomeComponent {
   post: string = '';
   hasImage: boolean = false;
-  ImageFile = []
+  ImageFile = [];
   ImageSrc: string | SafeUrl =
     'https://images.unsplash.com/photo-1521911528923-9c3838123490?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80';
   postButton: boolean = true;
-  sampleUserId: number = 1;
+  UserId: number = 1;
+  firstname?: string;
+  lastname?: string;
+  email?: string;
 
-  feeds: Post[] = [];
+  feeds: FeedModel[] = [];
+  UserToken: UserProfile[] = [];
+
+  jwtHelper = new JwtHelperService();
 
   constructor(
     private postService: PostService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private auth: AuthService
   ) {}
 
   ngOnInit(): void {
+    this.getUserProfile();
     this.fetchPosts();
+  }
+
+  getUserProfile() {
+    var data = JSON.parse(localStorage.getItem('user')!);
+    console.log(data)
+    if(data != null){
+      this.UserId = data.id
+      this.firstname = data.first_name;
+      this.lastname = data.last_name;
+      this.email = data.email;
+    }
   }
 
   fetchPosts() {
@@ -45,14 +69,25 @@ export class HomeComponent {
 
   createPost() {
     let postData: Post = {
-      user_id: this.sampleUserId,
+      user_id: this.UserId,
       content: this.post,
-      image: '',
+      image: this.ImageFile,
       created_at: '',
     };
-    this.postService.InsertPost(postData).subscribe((data) => {
+    // console.log(postData)
+    var formData: any = new FormData()
+    formData.append('user_id', this.UserId)
+    formData.append('content', this.post)
+    formData.append('image', this.ImageFile)
+    formData.append('created_at', '')
+
+    this.postService.InsertPost(formData).subscribe((data) => {
       console.log(data);
       this.fetchPosts();
+      this.post = '';
+      this.postButton = true;
+      this.hasImage = false;
+      this.ImageFile = []
     });
   }
 
@@ -75,21 +110,11 @@ export class HomeComponent {
       console.log(file.length, 'length');
       this.ImageFile = file;
       this.hasImage = true;
-      // console.log(file, 'imge');
-      // let count = event.target.files.length;
-      // for (let i = 0; i < count; i++) {
-      //   this.ImagePrevs.push(
-      //     this.sanitizer.bypassSecurityTrustUrl(
-      //       window.URL.createObjectURL(event.target.files[i])
-      //     )
-      //   );
-      // }
-      // console.log(this.ImageFile)
     }
   }
 
   removePrevImage() {
     this.hasImage = false;
-    console.log('test')
+    console.log('test');
   }
 }

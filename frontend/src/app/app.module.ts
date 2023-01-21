@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, CanActivate } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
@@ -16,6 +16,7 @@ import { MessageComponent } from './pages/message/message.component';
 import { FriendsComponent } from './pages/friends/friends.component';
 import { GroupsComponent } from './pages/groups/groups.component';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { AuthGuard } from './guard/auth.guard'
 
 @NgModule({
   declarations: [
@@ -38,7 +39,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
     HttpClientModule,
     RouterModule.forRoot([
       {
-        path: 'home',
+        path: '',
         component: PagesComponent,
         children: [
           {
@@ -47,6 +48,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
             outlet: 'child1',
           },
         ],
+        canActivate: [AuthGuard],
       },
       {
         path: 'messages',
@@ -58,6 +60,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
             outlet: 'child1',
           },
         ],
+        canActivate: [AuthGuard],
       },
       {
         path: 'friends',
@@ -69,6 +72,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
             outlet: 'child1',
           },
         ],
+        canActivate: [AuthGuard],
       },
       {
         path: 'groups',
@@ -80,6 +84,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
             outlet: 'child1',
           },
         ],
+        canActivate: [AuthGuard],
       },
       {
         path: 'profile',
@@ -91,9 +96,10 @@ import { ProfileComponent } from './pages/profile/profile.component';
             outlet: 'child1',
           },
         ],
+        canActivate: [AuthGuard],
       },
       {
-        path: '',
+        path: 'login',
         component: LoginComponent,
       },
     ]),

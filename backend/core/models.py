@@ -13,12 +13,16 @@ class User(AbstractUser):
     REQUIRED_FIELDS = []
 
 
+def image_path(instance, filename):
+    return 'posts/{filename}'.format(filename=filename)
+
+
 class Posts(models.Model):
     post_id = models.AutoField(primary_key=True)
     user_id = models.IntegerField(null=True)
     # user_id = models.ForeignKey(User, on_delete=models.CASCADE, null=False)
     content = models.TextField(blank=False)
-    image = models.TextField(blank = True,null=True)
+    image = models.ImageField(upload_to=image_path, default='posts/image.jpg')
     created_at = models. DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -26,7 +30,7 @@ class Posts(models.Model):
 class UserGallery(models.Model):
     gallery_id = models.AutoField(primary_key=True)
     user_id = models.IntegerField()
-    image = models.BinaryField()
+    image = models.ImageField(upload_to=image_path, default='posts/image.jpg')
     created_at = models. DateTimeField(auto_now_add=True)
 
 class Message(models.Model):

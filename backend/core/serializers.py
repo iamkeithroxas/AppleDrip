@@ -1,5 +1,5 @@
 from rest_framework.serializers import ModelSerializer
-from .models import User, Posts
+from .models import User, Posts, UserGallery
 
 
 class UserSerializer(ModelSerializer):
@@ -22,4 +22,9 @@ class UserSerializer(ModelSerializer):
 class PostsSerializer(ModelSerializer):
     class Meta:
         model = Posts
-        fields = ['user', 'content', 'image', 'created_at']
+        fields = ['user_id', 'content', 'image', 'created_at']
+
+class UserGalleriesSerializer(ModelSerializer):
+    class Meta:
+        model = UserGallery
+        fields = ['gallery_id','user_id', 'image']
