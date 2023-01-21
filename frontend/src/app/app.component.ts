@@ -13,15 +13,6 @@ export class AppComponent {
 
   constructor(private auth: AuthService, private route: Router) {}
 
-  // ngOnInit(): void {
-  //   this.auth.User().subscribe(
-  //     (res) => {
-  //       console.log(res)
-  //     }, (err) => {
-  //       console.log(err)
-  //       this.route.navigateByUrl('/')
-  //     }
-  //   )
-  // }
+  ngOnInit(): void {}
 
 }

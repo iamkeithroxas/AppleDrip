@@ -4,12 +4,16 @@ from rest_framework.response import Response
 from rest_framework import exceptions
 from core.authentication import create_access_token, JWTAuthentication, create_refresh_token, decode_refresh_token
 from rest_framework.authentication import get_authorization_header
-from core.models import User, Posts
-from .serializers import PostsSerializer, UserSerializer
+from core.models import User, Posts, UserGallery
+from .serializers import PostsSerializer, UserGalleriesSerializer, UserSerializer
 from django.http import JsonResponse
 from django.forms.models import model_to_dict
 from django.core import serializers
 import json
+from rest_framework import status
+from django.db import connection
+from collections import namedtuple
+from rest_framework.parsers import MultiPartParser, FormParser
 
 
 class RegisterAPIView(APIView):
@@ -22,10 +26,13 @@ class RegisterAPIView(APIView):
         serializer.save()
         return Response(serializer.data)
 
+
 class UserApiView(APIView):
     authentication_classes = [JWTAuthentication]
+
     def get(self, request):
         return Response(UserSerializer(request.user).data)
+
 
 class LoginApiView(APIView):
     def post(self, request):
@@ -39,23 +46,26 @@ class LoginApiView(APIView):
         access_token = create_access_token(user.id)
         refresh_token = create_refresh_token(user.id)
         response = Response()
-        response.set_cookie(key='refresh_token', value=refresh_token, httponly=True)
+        response.set_cookie(key='refresh_token',
+                            value=refresh_token, httponly=True)
         response.data = {
             'token': access_token
         }
         return response
 
+
 class RefreshAPIView(APIView):
-    def post(self, request):
+    def get(self, request):
         refresh_token = request.COOKIES.get('refresh_token')
         id = decode_refresh_token(refresh_token)
         access_token = create_access_token(id)
         return Response({
-            'token': access_token
+            'token': access_token,
         })
 
+
 class LogoutAPIView(APIView):
-    def post(self, request):
+    def get(self, request):
         response = Response()
         response.delete_cookie(key='refresh_token')
         response.data = {
@@ -65,22 +75,61 @@ class LogoutAPIView(APIView):
 
 
 # Post to wall insert sample
-class PostsAPIView(APIView): 
-    def post(self, request):
+class PostsAPIView(APIView):
+    # def post(self, request):
+    #     data = request.data
+    #     if data['content'] == None:
+    #         raise exceptions.APIException("Content is required.")
+    #     serializer = PostsSerializer(data=data)
+    #     serializer.is_valid(raise_exception=True)
+    #     serializer.save()
+    #     return Response(serializer.data)
+
+    parser_classes = [MultiPartParser, FormParser]
+
+    def post(self, request, format=None):
+        print(request.data)
         data = request.data
-        if data['content'] == None:
-            raise exceptions.APIException("Content is required.")
         serializer = PostsSerializer(data=data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data)
-    
+        serializer1 = UserGalleriesSerializer(data=data)
+
+        if serializer.is_valid() and serializer1.is_valid():
+            serializer.save()
+            serializer1.save()
+
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
+
+
+class UserGalleriesAPIView(APIView):
+    def get(self, request):
+        list_galleries = UserGallery.objects.all()
+        serializer = UserGalleriesSerializer(list_galleries, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+def dictfetchall(cursor):
+    "Return all rows from a cursor as a dict"
+    columns = [col[0] for col in cursor.description]
+    return [
+        dict(zip(columns, row))
+        for row in cursor.fetchall()
+    ]
+
+
 class FetchPostsAPIView(APIView):
     def get(self, request):
-        posts = Posts.objects.all()
-        serializer = PostsSerializer(posts, many=True)
-        return JsonResponse(serializer.data, safe=False)
-
+        # posts = Posts.objects.all()
+        # posts = Posts.objects.raw('SELECT * FROM core_posts INNER JOIN core_user ON core_posts.user_id = core_user.id')
+        # serializer = PostsSerializer(posts, many=True)
+        # return JsonResponse(serializer.data, safe=False)
+        cursor = connection.cursor()
+        cursor.execute(
+            '''SELECT user_id,first_name,last_name,post_id,content,image,created_at FROM core_posts INNER JOIN core_user ON core_posts.user_id = core_user.id''')
+        # row = cursor.fetchall()
+        # print(row)
+        return JsonResponse(dictfetchall(cursor), safe=False)
 
 
 # API TO CREATE
@@ -99,7 +148,7 @@ class FetchPostsAPIView(APIView):
 # FETCH ALL IMAGE DATA
 # DELETE IMAGE DATA BY POST_ID
 
-#///////////////////////////////
+# ///////////////////////////////
 # VINCENT
 # DATABASE : core_groups
 # INSERT GROUP DATA
