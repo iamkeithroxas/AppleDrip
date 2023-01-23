@@ -1,0 +1,217 @@
+/* body {
+  background-color: #FFF;
+}
+
+
+.card {
+align-content: center;
+  text-align: center;
+  margin: 50px;
+  width: 40%;
+  height: 640px;
+  margin-left: 30%;
+  border-radius: 15px;
+  background-color: black;
+  
+}
+.login {
+  font-size: 30px;
+  text-align: center;
+  margin-left: 30px;
+  color:beige;
+  font-family: 'Aero';
+}
+
+.title {
+  color: rgb(0, 92, 250);
+  margin-right: 180px;
+  font-size: 30px;
+  padding: 1px;
+  padding-bottom: 30px;
+ 
+
+}
+.example-full-width {
+width: 100%;
+}
+.text {
+color: white;
+}
+.form-container {
+  padding: 50px;
+}
+.login-btn {
+  align-content: center;
+  margin-left: 200px;
+  background-color: blueviolet;
+  
+}
+
+.mat-raised-button {
+color: blueviolet;
+}
+.signup-link{
+padding-top: 20px;
+color: white;
+}
+a:link {
+color: purple;
+background-color: transparent;
+text-decoration: none;
+}
+
+a:visited {
+color:blueviolet;
+background-color: transparent;
+text-decoration: none;
+}
+
+a:hover {
+color: blue;
+background-color: transparent;
+text-decoration: underline;
+}
+
+a:active {
+color: red;
+background-color: transparent;
+text-decoration: underline;
+}
+.form-container mat-form-field + mat-form-field {
+  margin-left: 8px;
+}
+
+.example-right-align {
+  text-align: right;
+}
+
+input.example-right-align::-webkit-outer-spin-button,
+input.example-right-align::-webkit-inner-spin-button {
+  display: none;
+}
+
+input.example-right-align {
+  -moz-appearance: textfield;
+}
+
+.email {
+  border-radius: 28px 0 0 28px !important;
+min-width: 28px !important;
+
+}
+
+::ng-deep .mat-form-field-outline-start {
+  border-radius: 28px 0 0 28px !important;
+  min-width: 28px !important;
+}
+
+::ng-deep .mat-form-field-outline-end {
+  border-radius: 0 28px 28px 0 !important;
+} */
+
+
+.card {
+  align-content: center;
+    text-align: center;
+    margin: 50px;
+    width: 40%;
+    height: 640px;
+    margin-left: 30%;
+    border-radius: 15px;
+    background-color: black;
+    
+}
+.login {
+    font-size: 30px;
+    text-align: center;
+    margin-left: 30px;
+    color:beige;
+    font-family: 'Aero';
+}
+
+.title {
+    color: rgb(0, 92, 250);
+    margin-right: 180px;
+    font-size: 30px;
+    padding: 1px;
+    padding-bottom: 30px;
+   
+  
+}
+.example-full-width {
+  width: 100%;
+}
+.text {
+  color: white;
+}
+.form-container {
+    padding: 50px;
+}
+.login-btn {
+    align-content: center;
+    margin-left: 200px;
+    background-color: blueviolet;
+    
+}
+
+.mat-raised-button {
+  color: blueviolet;
+}
+.signup-link{
+  padding-top: 20px;
+  color: white;
+}
+a:link {
+  color: purple;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a:visited {
+  color:blueviolet;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a:hover {
+  color: blue;
+  background-color: transparent;
+  text-decoration: underline;
+}
+
+a:active {
+  color: red;
+  background-color: transparent;
+  text-decoration: underline;
+}
+.form-container mat-form-field + mat-form-field {
+    margin-left: 8px;
+  }
+  
+  .example-right-align {
+    text-align: right;
+  }
+  
+  input.example-right-align::-webkit-outer-spin-button,
+  input.example-right-align::-webkit-inner-spin-button {
+    display: none;
+  }
+  
+  input.example-right-align {
+    -moz-appearance: textfield;
+  }
+
+.email {
+    border-radius: 28px 0 0 28px !important;
+  min-width: 28px !important;
+
+}
+
+::ng-deep .mat-form-field-outline-start {
+    border-radius: 28px 0 0 28px !important;
+    min-width: 28px !important;
+  }
+  
+  ::ng-deep .mat-form-field-outline-end {
+    border-radius: 0 28px 28px 0 !important;
+  }

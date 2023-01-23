@@ -12,6 +12,10 @@ export class AuthService {
   login(params: object) {
     return this.http.post<any>('http://127.0.0.1:8000/api/login', params);
   }
+  Register(params: object) {
+    return this.http.post<any>('http://127.0.0.1:8000/api/register', params);
+  }
+
 
   User() {
     const token = localStorage.getItem('token');

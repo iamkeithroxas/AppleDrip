@@ -1,1 +1,95 @@
-<p>register works!</p>
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body>
+
+
+<mat-card class="card">
+    <mat-card-header class="header">
+    
+     <mat-card-title class="title"> <img [src] ="ImagePath" 
+      style="width: 200px;height: 60px; "class="title"></mat-card-title>
+      <mat-card-subtitle class="login">Join AppleDrip Today</mat-card-subtitle>
+    </mat-card-header>
+
+    <div class="form-container">
+      <form [formGroup] = 'registerForm' (ngSubmit) = 'register()' class="example-form">
+        <mat-grid-list cols="2" rowHeight="4rem">
+          <mat-grid-tile>
+            <mat-form-field appearance="fill" class="example-full-width" color="accent">
+              <mat-label class="text">First Name</mat-label>
+              <input formControlName="first_name" class="fname" matInput required>
+             
+            
+            </mat-form-field>
+          <br>
+          </mat-grid-tile>
+          <!-- 2 -->
+          <mat-grid-tile>
+            <mat-form-field appearance="fill" class="example-full-width" color="accent">
+              <mat-label class="text">Last Name</mat-label>
+              <input formControlName="last_name"class="lname" matInput  required>
+             
+            
+            </mat-form-field>
+        
+          </mat-grid-tile>
+          <!-- 3 -->
+          <!-- <mat-grid-tile>
+            <mat-form-field appearance="fill" class="example-full-width" color="accent">
+              <mat-label class="text">Username</mat-label>
+              <input formControlName="username" class="uname" matInput placeholder=""  required>
+              <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+            
+            </mat-form-field>
+         
+          </mat-grid-tile> -->
+          <!-- 4 -->
+          <!-- <mat-grid-tile> -->
+           
+          <!-- </mat-grid-tile> -->
+          
+         
+        </mat-grid-list>
+          
+        <mat-form-field appearance="fill" class="example-full-width" color="accent">
+          <mat-label class="text">Email</mat-label>
+          <input formControlName="email" class="email" matInput placeholder="pat@example.com"  required>
+          <mat-icon matSuffix>mail</mat-icon>
+        
+        </mat-form-field>
+      <br>
+        <mat-form-field appearance="fill" class="example-full-width" color="accent">
+          <mat-label class="text">Enter your password</mat-label>
+          <input formControlName="password" matInput [type]="hide ? 'password' : 'text'" placeholder="must atleats 8 cahracters" required>
+          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          </mat-form-field>
+          <br>
+          <mat-form-field appearance="fill" class="example-full-width" color="accent">
+            <mat-label class="text">Confirm your password</mat-label>
+            <input formControlName="password_confirm" matInput [type]="hide ? 'password' : 'text'" placeholder="Re-enter here your password" required>
+            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+            </mat-form-field>
+            <mat-card-actions>
+      
+              <button mat-raised-button color="accent" class="login-btn">Register</button>
+              
+            </mat-card-actions>
+      </form>
+
+        
+      
+      <mat-card-subtitle class="signup-link">Already have an Account? <a routerLink="/login" href="">Login</a></mat-card-subtitle>
+     
+      </div>
+     
+    </mat-card>
+  <br>
+</body>
+  </html>

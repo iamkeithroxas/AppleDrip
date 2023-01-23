@@ -3,6 +3,16 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes, CanActivate } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import {MatCardModule} from '@angular/material/card';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatGridListModule} from '@angular/material/grid-list';
+
 
 import { AppComponent } from './app.component';
 import { AuthComponent } from './auth/auth.component';
@@ -37,6 +47,15 @@ import { AuthGuard } from './guard/auth.guard'
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    BrowserAnimationsModule,
+    MatSlideToggleModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
+    MatButtonModule,
+    MatDividerModule,
+    MatGridListModule,
     RouterModule.forRoot([
       {
         path: '',
@@ -101,6 +120,10 @@ import { AuthGuard } from './guard/auth.guard'
       {
         path: 'login',
         component: LoginComponent,
+      },
+      {
+        path: 'register',
+        component: RegisterComponent,
       },
     ]),
     NgbModule,

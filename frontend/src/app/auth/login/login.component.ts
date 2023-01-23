@@ -10,19 +10,24 @@ import { JwtHelperService } from '@auth0/angular-jwt';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
-  registerForm = new FormGroup({
+  hide = true;
+  ImagePath: string;
+  loginForm = new FormGroup({
     email: new FormControl(''),
     password: new FormControl(''),
   });
   jwtHelper = new JwtHelperService();
-  constructor(private auth: AuthService, private route: Router) {}
+  constructor(private auth: AuthService, private route: Router) {
+    //image location
+    this.ImagePath = '/assets/images/appledrip.png'
+  }
 
   ngOnInit(): void {}
 
   onLogin() {
     var formData: any = new FormData();
-    formData.append('email', this.registerForm.get('email')?.value);
-    formData.append('password', this.registerForm.get('password')?.value);
+    formData.append('email', this.loginForm.get('email')?.value);
+    formData.append('password', this.loginForm.get('password')?.value);
     this.auth.login(formData).subscribe(
       (res) => {
         localStorage.setItem('token', res.token);

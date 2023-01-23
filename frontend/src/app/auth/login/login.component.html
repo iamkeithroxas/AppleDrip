@@ -1,13 +1,51 @@
-<form [formGroup]="registerForm" (ngSubmit)="onLogin()">
-    <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">Email address</label>
-        <input type="email" class="form-control" formControlName="email" aria-describedby="emailHelp">
-        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-    </div>
-    <div class="mb-3">
-        <label for="exampleInputPassword1" class="form-label">Password</label>
-        <input type="password" class="form-control" formControlName="password">
-    </div>
-    <!-- <button type="button" class="btn btn-success" routerLink="/app-register">register</button> -->
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body>
+
+
+<mat-card class="card">
+    <mat-card-header class="header">
+    
+     <mat-card-title class="title"> <img [src] ="ImagePath" 
+      style="width: 200px;height: 90px; "class="title"></mat-card-title>
+      <mat-card-subtitle class="login">Sign in to AppleDrip</mat-card-subtitle>
+    </mat-card-header>
+
+    <div class="form-container">
+      <form class="example-form" [formGroup]="loginForm" (ngSubmit)="onLogin()">
+          <mat-form-field appearance="fill" class="example-full-width" color="accent">
+            <mat-label class="text">Enter your email</mat-label>
+            <input formControlName="email" class="email" matInput placeholder="pat@example.com"  required>
+            <mat-icon matSuffix>mail</mat-icon>
+          <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+            
+          </mat-form-field>
+        <br>
+        <mat-form-field appearance="fill" class="example-full-width" color="accent">
+          <mat-label class="text">Enter your password</mat-label>
+          <input formControlName="password" matInput [type]="hide ? 'password' : 'text'" required>
+          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          </mat-form-field>
+        
+      </form>
+
+        
+      <mat-card-actions class="login-container ">
+      
+        <button mat-raised-button color="accent" class="login-btn">Login</button>
+        
+      </mat-card-actions>
+      <br>
+      <mat-divider></mat-divider>
+      <mat-card-subtitle class="signup-link">Don't have an Account? <a routerLink="/register" href="">Sign up</a></mat-card-subtitle>
+      </div>
+     
+    </mat-card>
+  <br>
+</body>
+</html>
