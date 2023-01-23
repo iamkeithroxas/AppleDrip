@@ -1,5 +1,6 @@
 from rest_framework.serializers import ModelSerializer
 from .models import User, Posts, UserGallery
+from django.db import models
 
 
 class UserSerializer(ModelSerializer):
@@ -29,3 +30,17 @@ class UserGalleriesSerializer(ModelSerializer):
         model = UserGallery
         fields = ['gallery_id','user_id', 'image']
 
+
+#message
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+    pic = models.ImageField(upload_to="img", blank=True, null=True)
+    friends = models.ManyToManyField('Friend', related_name = "my_friends")
+    
+    def __str__(self):
+        return self.name
+    
+    
+class Friend(models.Model):
+    pass

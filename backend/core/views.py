@@ -138,6 +138,10 @@ class UserGalleriesAPIView(APIView):
 # DELETE MEMBER TO GROUP BY USER_ID AND GROUP ID
 
 # ///////////////////////////////
+class MessageAPIView(APIView):
+    def index(request):
+        context = {}
+        return render (request, "mychatapp/index.html", context)
 # RONALD
 # DATABASE : core_message
 # INSERT MESSAGE DATA
