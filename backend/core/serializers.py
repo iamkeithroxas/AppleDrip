@@ -1,5 +1,5 @@
 from rest_framework.serializers import ModelSerializer
-from .models import User, Posts, UserGallery
+from .models import User, Posts, UserGallery, GroupMembers,UserFriends, Groups
 
 
 class UserSerializer(ModelSerializer):
@@ -28,3 +28,18 @@ class UserGalleriesSerializer(ModelSerializer):
     class Meta:
         model = UserGallery
         fields = ['gallery_id','user_id', 'image']
+
+class UserFriendsSerializer(ModelSerializer):
+    class Meta:
+        model = UserFriends
+        fields = ['frnd_id','user_id','friend_id']
+
+class CreateGroupSerializer(ModelSerializer):
+    class Meta:
+        model = Groups
+        fields = ['group_id','group_name','created_at']
+
+class JoinGroupSerializer(ModelSerializer):
+    class Meta:
+        model = GroupMembers
+        fields = ['group_id','user_id','joined_at','gm_id']

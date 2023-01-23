@@ -5,7 +5,7 @@ from rest_framework import exceptions
 from core.authentication import create_access_token, JWTAuthentication, create_refresh_token, decode_refresh_token
 from rest_framework.authentication import get_authorization_header
 from core.models import User, Posts, UserGallery
-from .serializers import PostsSerializer, UserGalleriesSerializer, UserSerializer
+from .serializers import PostsSerializer, UserGalleriesSerializer, UserSerializer,UserFriendsSerializer,CreateGroupSerializer, JoinGroupSerializer
 from django.http import JsonResponse
 from django.forms.models import model_to_dict
 from django.core import serializers
@@ -130,6 +130,42 @@ class FetchPostsAPIView(APIView):
         # row = cursor.fetchall()
         # print(row)
         return JsonResponse(dictfetchall(cursor), safe=False)
+
+
+class CreateGroupAPIView(APIView): 
+    def post(self, request):
+        data = request.data
+        if data['group_id'] == '':
+            raise exceptions.APIException("Content is required.")
+        serializer = CreateGroupSerializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
+
+class JoinGroupAPIView(APIView): 
+    def post(self, request):
+        data = request.data
+        if data['gm_id'] == '':
+            raise exceptions.APIException("Content is required.")
+        serializer = JoinGroupSerializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
+
+class UserFriendsAPIView(APIView): 
+    def post(self, request):
+        data = request.data
+        if data['user_id'] == '':
+            raise exceptions.APIException("Content is required.")
+        serializer = UserFriendsSerializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
+
+
+
+
+
 
 
 # API TO CREATE
