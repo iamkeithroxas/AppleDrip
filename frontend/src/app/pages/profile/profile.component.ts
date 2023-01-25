@@ -1,5 +1,11 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../service/auth.service';
+import {
+  ModalDismissReasons,
+  NgbDatepickerModule,
+  NgbModal,
+} from '@ng-bootstrap/ng-bootstrap';
+import {EditProfileModalComponent} from './edit-profile-modal/edit-profile-modal.component'
 
 @Component({
   selector: 'app-profile',
@@ -11,7 +17,8 @@ export class ProfileComponent {
   firstname?: string;
   lastname?: string;
   email?: string;
-  constructor(private auth: AuthService) {}
+  date_joined?: Date;
+  constructor(private auth: AuthService, private modalService: NgbModal) {}
 
   ngOnInit(): void {
     this.getUserProfile();
@@ -25,6 +32,13 @@ export class ProfileComponent {
       this.firstname = data.first_name;
       this.lastname = data.last_name;
       this.email = data.email;
+      this.date_joined = data.date_joined;
     }
+  }
+  open() {
+    const modalRef = this.modalService.open(EditProfileModalComponent, {
+      windowClass: "editProfile-Modal"
+    });
+    modalRef.componentInstance.name = 'World';
   }
 }

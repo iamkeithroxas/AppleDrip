@@ -5,7 +5,7 @@ from .models import User, Posts, UserGallery, GroupMembers,UserFriends, Groups
 class UserSerializer(ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'first_name', 'last_name', 'email', 'password']
+        fields = ['id', 'first_name', 'last_name', 'email', 'password', 'date_joined']
         extra_kwargs = {
             'password': {'write_only': True}
         }

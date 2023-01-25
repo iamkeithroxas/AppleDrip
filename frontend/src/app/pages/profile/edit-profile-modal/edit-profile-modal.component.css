@@ -1,0 +1,9 @@
+.edit-profile-modal{
+    padding: 0.5rem;
+}
+
+::ng-deep .editProfile-Modal > .modal-dialog{
+    max-width: 500px !important;
+    height: auto;
+    margin-top: 80px;
+}

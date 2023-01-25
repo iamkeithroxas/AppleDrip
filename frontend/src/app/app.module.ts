@@ -27,6 +27,8 @@ import { FriendsComponent } from './pages/friends/friends.component';
 import { GroupsComponent } from './pages/groups/groups.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { AuthGuard } from './guard/auth.guard'
+import {NgbDatepickerModule} from '@ng-bootstrap/ng-bootstrap';
+import { EditProfileModalComponent } from './pages/profile/edit-profile-modal/edit-profile-modal.component'
 
 @NgModule({
   declarations: [
@@ -41,6 +43,7 @@ import { AuthGuard } from './guard/auth.guard'
     FriendsComponent,
     GroupsComponent,
     ProfileComponent,
+    EditProfileModalComponent,
   ],
   imports: [
     BrowserModule,
