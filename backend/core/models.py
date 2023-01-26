@@ -75,3 +75,12 @@ class EmailCode(models.Model):
     user_id = models.IntegerField()
     email_code = models.CharField(max_length=6)
     sent_at = models.DateTimeField(auto_now_add=True)
+
+class Message(models.Model):
+    username = models.CharField(max_length=255)
+    room = models.CharField(max_length=255)
+    content = models.TextField()
+    date_added = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ('date_added', )

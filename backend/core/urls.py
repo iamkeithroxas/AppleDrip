@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import LogoutAPIView, PostsAPIView, RefreshAPIView, RegisterAPIView, LoginApiView, UserApiView, UserGalleriesAPIView, MessageAPIView
+from .views import LogoutAPIView, PostsAPIView, RefreshAPIView, RegisterAPIView, LoginApiView, UserApiView, UserGalleriesAPIView, MessageAPIView, MessageroomAPIView
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -11,6 +11,7 @@ urlpatterns = [
     path('logout', LogoutAPIView.as_view()),
     path('insert_post', PostsAPIView.as_view()),
     path('my_gallery', UserGalleriesAPIView.as_view()),
-    path('message', MessageAPIView.as_view())
+    path('message', MessageAPIView.as_view()),
+    path('message_room', MessageroomAPIView.as_view())
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

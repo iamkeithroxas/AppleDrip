@@ -9,6 +9,7 @@ from .serializers import PostsSerializer, UserGalleriesSerializer, UserSerialize
 from rest_framework import status
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.permissions import IsAuthenticated
+from .models import Message
 
 
 class RegisterAPIView(APIView):
@@ -140,8 +141,14 @@ class UserGalleriesAPIView(APIView):
 # ///////////////////////////////
 class MessageAPIView(APIView):
     def index(request):
-        context = {}
-        return render (request, "mychatapp/index.html", context)
+        return render(request, 'chat/index.html')
+
+class MessageroomAPIView(APIView):
+    def room(request, room_name):
+        username = request.GET.get('username', 'Anonymous')
+        messages = Message. objects.filter(room = room_name)[0.25]
+        
+        return render (request, 'chat/room.html', {'room_name': room_name, 'username': username, 'message': messages})
 # RONALD
 # DATABASE : core_message
 # INSERT MESSAGE DATA
