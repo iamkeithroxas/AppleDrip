@@ -1,7 +1,7 @@
 from django.conf.urls.static import static
 from django.urls import path
 from django.conf import settings
-from .views import FetchPostsAPIView, GroupDataAPIView, LogoutAPIView, PostDeleteAPIView, PostsAPIView, RefreshAPIView, RegisterAPIView, LoginApiView, UpdatePostAPIView, UserApiView, UserGalleriesAPIView,UserFriendsAPIView,CreateGroupAPIView, JoinGroupAPIView
+from .views import DeleteGalleriesAPIView, FetchPostsAPIView, GroupDataAPIView, LogoutAPIView, PostDeleteAPIView, PostsAPIView, RefreshAPIView, RegisterAPIView, LoginApiView, UpdatePostAPIView, UserApiView, UserGalleriesAPIView,UserFriendsAPIView,CreateGroupAPIView, JoinGroupAPIView
 
 urlpatterns = [
     path('register', RegisterAPIView.as_view()),
@@ -14,6 +14,8 @@ urlpatterns = [
     path('delete_post/<int:pk>/', PostDeleteAPIView.as_view()),
     path('fetch_post', FetchPostsAPIView.as_view()),
     path('my_gallery', UserGalleriesAPIView.as_view()),
+    path('delete_gallery/<int:pk>/', DeleteGalleriesAPIView.as_view()),
+
     path('Addfriend', UserFriendsAPIView.as_view()),
     path('creategroup', CreateGroupAPIView.as_view()),
     path('joingroup', JoinGroupAPIView.as_view()),

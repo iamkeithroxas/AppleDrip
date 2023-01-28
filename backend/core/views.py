@@ -130,7 +130,14 @@ class UserGalleriesAPIView(APIView):
         list_galleries = UserGallery.objects.all()
         serializer = UserGalleriesSerializer(list_galleries, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
-
+class DeleteGalleriesAPIView(APIView):
+    def delete(self, request, pk):
+        try:
+            instance = UserGallery.objects.get(pk=pk)
+            instance.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except UserGallery.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
 def dictfetchall(cursor):
     "Return all rows from a cursor as a dict"
