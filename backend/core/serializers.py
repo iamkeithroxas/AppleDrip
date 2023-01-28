@@ -43,3 +43,8 @@ class JoinGroupSerializer(ModelSerializer):
     class Meta:
         model = GroupMembers
         fields = ['group_id','user_id','joined_at','gm_id']
+
+class GroupSerializer(ModelSerializer):
+    class Meta:
+        model = Groups
+        fields = ['group_id','group_name','created_at']

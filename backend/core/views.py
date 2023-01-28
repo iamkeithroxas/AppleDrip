@@ -1,11 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render 
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import exceptions
 from core.authentication import create_access_token, JWTAuthentication, create_refresh_token, decode_refresh_token
 from rest_framework.authentication import get_authorization_header
 from core.models import User, Posts, UserGallery
-from .serializers import PostsSerializer, UserGalleriesSerializer, UserSerializer,UserFriendsSerializer,CreateGroupSerializer, JoinGroupSerializer
+from .serializers import GroupSerializer, PostsSerializer, UserGalleriesSerializer, UserSerializer,UserFriendsSerializer,CreateGroupSerializer, JoinGroupSerializer
 from django.http import JsonResponse
 from django.forms.models import model_to_dict
 from django.core import serializers
@@ -162,7 +162,12 @@ class UserFriendsAPIView(APIView):
         serializer.save()
         return Response(serializer.data)
 
-
+class GroupDataAPIView(APIView):
+    def get(self, request):
+        cursor = connection.cursor()
+        cursor.execute(
+            '''SELECT group_id,group_name,created_at FROM core_groups''')
+        return JsonResponse(dictfetchall(cursor), safe=False)
 
 
 

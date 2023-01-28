@@ -1,7 +1,7 @@
 from django.conf.urls.static import static
 from django.urls import path
 from django.conf import settings
-from .views import FetchPostsAPIView, LogoutAPIView, PostsAPIView, RefreshAPIView, RegisterAPIView, LoginApiView, UserApiView, UserGalleriesAPIView,UserFriendsAPIView,CreateGroupAPIView, JoinGroupAPIView
+from .views import FetchPostsAPIView, GroupDataAPIView, LogoutAPIView, PostsAPIView, RefreshAPIView, RegisterAPIView, LoginApiView, UserApiView, UserGalleriesAPIView,UserFriendsAPIView,CreateGroupAPIView, JoinGroupAPIView
 
 urlpatterns = [
     path('register', RegisterAPIView.as_view()),
@@ -15,5 +15,6 @@ urlpatterns = [
     path('Addfriend', UserFriendsAPIView.as_view()),
     path('creategroup', CreateGroupAPIView.as_view()),
     path('joingroup', JoinGroupAPIView.as_view()),
+    path('groups', GroupDataAPIView.as_view()),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
