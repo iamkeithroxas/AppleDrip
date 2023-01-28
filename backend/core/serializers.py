@@ -1,5 +1,5 @@
 from rest_framework.serializers import ModelSerializer
-from .models import User, Posts, UserGallery, GroupMembers,UserFriends, Groups, Message
+from .models import User, Posts, UserGallery, GroupMembers,UserFriends, Groups, Message, UserFollowers
 
 
 class UserSerializer(ModelSerializer):
@@ -54,4 +54,10 @@ class MessageSerializer(ModelSerializer):
         model = Message
         fields = ['message_id', 'sender_id', 'receiver_id', 'message', 'sent_at']
         read_only = ('message_id')
+
+class UserFollowersSerializer(ModelSerializer):
+    class Meta:
+        model = UserFollowers
+        fields = ['follow_id', 'user_id', 'follower_id']
+
 

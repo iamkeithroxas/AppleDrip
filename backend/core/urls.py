@@ -21,10 +21,11 @@ urlpatterns = [
     path('joingroup', JoinGroupAPIView.as_view()),
     path('groups', GroupDataAPIView.as_view()),
 
-    path('list', MessageListView.as_view()),
+    path('list/', MessageListView.as_view()),
     path('create/', MessageCreateView.as_view()),
     path('<pk>', MessageDetailView.as_view()),
     path('<pk>/update/', MessageUpdateView.as_view()),
     path('<pk>/delete/', MessageDeleteView.as_view()),
+    path('userfollow/', UserFollowersAPIView.as_view()),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

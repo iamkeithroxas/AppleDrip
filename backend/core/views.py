@@ -5,7 +5,7 @@ from rest_framework import exceptions
 from core.authentication import create_access_token, JWTAuthentication, create_refresh_token, decode_refresh_token
 from rest_framework.authentication import get_authorization_header
 from core.models import User, Posts, UserGallery
-from .serializers import GroupSerializer, PostsSerializer, UserGalleriesSerializer, UserSerializer,UserFriendsSerializer,CreateGroupSerializer, JoinGroupSerializer
+from .serializers import GroupSerializer, PostsSerializer, UserGalleriesSerializer, UserSerializer,UserFriendsSerializer,CreateGroupSerializer, JoinGroupSerializer, UserFollowersSerializer
 from django.http import JsonResponse
 from django.forms.models import model_to_dict
 from django.core import serializers
@@ -235,6 +235,17 @@ class MessageDeleteView(DestroyAPIView):
     queryset = Message.objects.all()
     serializer_class = MessageSerializer
     permission_classes = (permissions.IsAuthenticated, )
+
+class UserFollowersAPIView(APIView): 
+    def post(self, request):
+        data = request.data
+        if data['follow_id'] == '':
+            raise exceptions.APIException("Content is required.")
+        serializer = UserFollowersSerializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
+
 
 
 
