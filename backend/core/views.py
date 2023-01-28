@@ -14,6 +14,16 @@ from rest_framework import status
 from django.db import connection
 from collections import namedtuple
 from rest_framework.parsers import MultiPartParser, FormParser
+from .serializers import MessageSerializer
+from rest_framework import permissions
+from .models import Message
+from rest_framework.generics import (
+    ListAPIView,
+    RetrieveAPIView,
+    CreateAPIView,
+    DestroyAPIView,
+    UpdateAPIView
+)
 
 
 class RegisterAPIView(APIView):
@@ -198,6 +208,33 @@ class GroupDataAPIView(APIView):
         cursor.execute(
             '''SELECT group_id,group_name,created_at FROM core_groups''')
         return JsonResponse(dictfetchall(cursor), safe=False)
+
+#message
+class MessageListView(ListAPIView):
+    serializer_class = MessageSerializer
+    permission_classes = (permissions.AllowAny, )
+
+class MessageDetailView(RetrieveAPIView):
+    queryset = Message.objects.all()
+    serializer_class = MessageSerializer
+    permission_classes = (permissions.AllowAny, )
+
+class MessageCreateView(CreateAPIView):
+    queryset = Message.objects.all()
+    serializer_class = MessageSerializer
+    permission_classes = (permissions.IsAuthenticated, )
+
+
+class MessageUpdateView(UpdateAPIView):
+    queryset = Message.objects.all()
+    serializer_class = MessageSerializer
+    permission_classes = (permissions.IsAuthenticated, )
+
+
+class MessageDeleteView(DestroyAPIView):
+    queryset = Message.objects.all()
+    serializer_class = MessageSerializer
+    permission_classes = (permissions.IsAuthenticated, )
 
 
 

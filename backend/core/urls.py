@@ -1,7 +1,7 @@
 from django.conf.urls.static import static
 from django.urls import path
 from django.conf import settings
-from .views import DeleteGalleriesAPIView, FetchPostsAPIView, GroupDataAPIView, LogoutAPIView, PostDeleteAPIView, PostsAPIView, RefreshAPIView, RegisterAPIView, LoginApiView, UpdatePostAPIView, UserApiView, UserGalleriesAPIView,UserFriendsAPIView,CreateGroupAPIView, JoinGroupAPIView
+from .views import DeleteGalleriesAPIView, FetchPostsAPIView, GroupDataAPIView, LogoutAPIView, PostDeleteAPIView, PostsAPIView, RefreshAPIView, RegisterAPIView, LoginApiView, UpdatePostAPIView, UserApiView, UserGalleriesAPIView,UserFriendsAPIView,CreateGroupAPIView, JoinGroupAPIView, MessageListView, MessageDetailView, MessageCreateView, MessageUpdateView, MessageDeleteView, UserFollowersAPIView
 
 urlpatterns = [
     path('register', RegisterAPIView.as_view()),
@@ -20,5 +20,11 @@ urlpatterns = [
     path('creategroup', CreateGroupAPIView.as_view()),
     path('joingroup', JoinGroupAPIView.as_view()),
     path('groups', GroupDataAPIView.as_view()),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
+    path('list', MessageListView.as_view()),
+    path('create/', MessageCreateView.as_view()),
+    path('<pk>', MessageDetailView.as_view()),
+    path('<pk>/update/', MessageUpdateView.as_view()),
+    path('<pk>/delete/', MessageDeleteView.as_view()),
+
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
