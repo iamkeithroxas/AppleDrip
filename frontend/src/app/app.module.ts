@@ -12,7 +12,8 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatGridListModule} from '@angular/material/grid-list';
-
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { PickerModule } from '@ctrl/ngx-emoji-mart';
 
 import { AppComponent } from './app.component';
 import { AuthComponent } from './auth/auth.component';
@@ -59,6 +60,8 @@ import { EditProfileModalComponent } from './pages/profile/edit-profile-modal/ed
     MatButtonModule,
     MatDividerModule,
     MatGridListModule,
+    FontAwesomeModule,
+    PickerModule,
     RouterModule.forRoot([
       {
         path: '',

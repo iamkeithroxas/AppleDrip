@@ -1,3 +1,6 @@
+
+
+
 <div class="row">
     <div class="col-md-7 feed">
         <div class="p-2 d-flex justify-content-between feed-header">
@@ -22,6 +25,7 @@
                     <!-- <div class="input-area" (focus)="postAreaFocus()" (focusout)="postAreaFocusOut()"  contenteditable="true">
                                 {{post}}
                             </div> -->
+                      
                     <textarea class="input-area " name="post" [(ngModel)]="post" (keyup)="CheckPostContent($event)" placeholder="What's your thought?"></textarea>
                     <div class="uploadDiv" *ngIf="hasImage">
                         <div><a type="button" class="float-end" (click)="removePrevImage()"><i class="fa fa-times"></i></a></div>
@@ -33,7 +37,13 @@
                         <div>
                             <!-- <a type="button"><i class="fa fa-image"></i></a> -->
                             <input type="file" #image_upload id="upload" (change)="getImage($event)" hidden/>
-                            <label for="upload" class="fileup"><i class="fa fa-image"></i></label>
+                            <label for="upload" class="fileup"> 
+                                <mat-icon  class="icon" aria-hidden="false" aria-label="Example home icon" fontIcon="add_a_photo"></mat-icon></label>
+                        </div>
+                        <div>
+                            <button (click)="isEmojiPickerVisible = !isEmojiPickerVisible;">😀</button>
+<br>
+<emoji-mart class="emoji-mart" *ngIf="isEmojiPickerVisible" (emojiSelect)="addEmoji($event)" title="Choose your emoji"></emoji-mart>
                         </div>
                     </div>
                     <div class="create-post-bottom">

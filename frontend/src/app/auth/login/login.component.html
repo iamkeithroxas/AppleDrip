@@ -19,7 +19,7 @@
           <mat-form-field appearance="fill" class="example-full-width" color="accent">
             <mat-label class="text">Enter your email</mat-label>
             <input formControlName="email" class="email" matInput placeholder="pat@example.com"  required>
-            <mat-icon matSuffix>mail</mat-icon>
+            <mat-icon class="icon" matSuffix>mail</mat-icon>
           <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
             
           </mat-form-field>
@@ -28,7 +28,7 @@
           <mat-label class="text">Enter your password</mat-label>
           <input formControlName="password" matInput [type]="hide ? 'password' : 'text'" required>
           <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            <mat-icon class="icon">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
           </button>
           </mat-form-field>
         

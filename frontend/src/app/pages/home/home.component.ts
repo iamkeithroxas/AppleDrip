@@ -7,13 +7,17 @@ import { UserProfile} from '../model/user-profile'
 import { FeedModel } from '../model/feed.model'
 import { AuthService } from '../service/auth.service';
 
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css'],
+  styleUrls: ['./home.component.css', './home.component.scss'],
 })
 
 export class HomeComponent {
+  public textArea: string = '';
+  public isEmojiPickerVisible: boolean = false;
+ 
   post: string = '';
   hasImage: boolean = false;
   ImageFile = [];
@@ -24,6 +28,7 @@ export class HomeComponent {
   firstname?: string;
   lastname?: string;
   email?: string;
+
 
   feeds: FeedModel[] = [];
   UserToken: UserProfile[] = [];
@@ -40,7 +45,10 @@ export class HomeComponent {
     this.getUserProfile();
     this.fetchPosts();
   }
-
+  public addEmoji(event: any) {
+    this.post = `${this.post}${event.emoji.native}`;
+    this.isEmojiPickerVisible = false;
+ }
   getUserProfile() {
     var data = JSON.parse(localStorage.getItem('user')!);
     console.log(data)

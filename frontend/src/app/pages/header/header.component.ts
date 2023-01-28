@@ -8,7 +8,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent {
-  constructor(private auth: AuthService, private route: Router) {}
+  ImagePath: string;
+  constructor(private auth: AuthService, private route: Router) {
+    //image location
+    this.ImagePath = '/assets/images/appledrip.png'
+  }
 
   Logout() {
     this.auth.Logout().subscribe((data) => {

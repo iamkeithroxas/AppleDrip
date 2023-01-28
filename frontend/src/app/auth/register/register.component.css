@@ -1,7 +1,9 @@
 body {
     background-color: #FFF;
   }
-  
+.icon {
+  color: #FFF;
+}
   
   .card {
   align-content: center;

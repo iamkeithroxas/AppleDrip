@@ -1,6 +1,19 @@
+header {
+    background-color: whitesmoke;
+}
+
 .header-logo-container {
     padding: 0.5rem;
     /* text-align: center; */
+}
+
+.icon {
+    color: rgb(109, 23, 214);
+    padding-top: 4px;
+    padding-right: 2px;
+    width: 30px;
+   
+
 }
 
 .header-logo {
@@ -14,6 +27,7 @@
     text-decoration: none;
     color: #000;
     font-weight: 600;
+    font-family: 'Hero';
 }
 
 .active {

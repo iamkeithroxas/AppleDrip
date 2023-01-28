@@ -10,7 +10,7 @@
     <mat-card-header class="header">
     
      <mat-card-title class="title"> <img [src] ="ImagePath" 
-      style="width: 200px;height: 60px; "class="title"></mat-card-title>
+      style="width: 200px;height: 90px; "class="title"></mat-card-title>
       <mat-card-subtitle class="login">Join AppleDrip Today</mat-card-subtitle>
     </mat-card-header>
 
@@ -57,7 +57,7 @@
         <mat-form-field appearance="fill" class="example-full-width" color="accent">
           <mat-label class="text">Email</mat-label>
           <input formControlName="email" class="email" matInput placeholder="pat@example.com"  required>
-          <mat-icon matSuffix>mail</mat-icon>
+          <mat-icon class="icon" matSuffix>mail</mat-icon>
         
         </mat-form-field>
       <br>
@@ -65,7 +65,7 @@
           <mat-label class="text">Enter your password</mat-label>
           <input formControlName="password" matInput [type]="hide ? 'password' : 'text'" placeholder="must atleats 8 cahracters" required>
           <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            <mat-icon class="icon">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
           </button>
           </mat-form-field>
           <br>
@@ -73,7 +73,7 @@
             <mat-label class="text">Confirm your password</mat-label>
             <input formControlName="password_confirm" matInput [type]="hide ? 'password' : 'text'" placeholder="Re-enter here your password" required>
             <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              <mat-icon class="icon">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
             </button>
             </mat-form-field>
             <mat-card-actions>
