@@ -101,6 +101,20 @@ class PostsAPIView(APIView):
         else:
             return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
 
+    
+class UpdatePostAPIView(APIView):
+    
+    def put(self, request, pk):
+        post = Posts.objects.get(pk=pk)
+        serializer = PostsSerializer(post, data=request.data, context={'request': request})
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        non_field_errors = serializer.errors.get('non_field_errors', None)
+        if non_field_errors:
+            return Response({'non_field_errors': non_field_errors}, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class UserGalleriesAPIView(APIView):
     def get(self, request):
