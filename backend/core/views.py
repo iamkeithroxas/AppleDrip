@@ -115,7 +115,16 @@ class UpdatePostAPIView(APIView):
         if non_field_errors:
             return Response({'non_field_errors': non_field_errors}, status=status.HTTP_400_BAD_REQUEST)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
+    
+class PostDeleteAPIView(APIView):
+    def delete(self, request, pk):
+        try:
+            instance = Posts.objects.get(pk=pk)
+            instance.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except Posts.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        
 class UserGalleriesAPIView(APIView):
     def get(self, request):
         list_galleries = UserGallery.objects.all()
