@@ -28,8 +28,11 @@ header {
     color: #000;
     font-weight: 600;
     font-family: 'Hero';
+    cursor: pointer;
 }
-
+.p-2:hover {
+    background-color: rgb(214, 214, 214);
+}
 .active {
     font-weight: 900;
 }

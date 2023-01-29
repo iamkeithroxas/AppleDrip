@@ -2,6 +2,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 @import 'material-icons/iconfont/material-icons.css';
 @import '~@ctrl/ngx-emoji-mart/picker';
+@font-face {
+    font-family: "Hero";
+    src: local("Hero"), url(./assets/fonts//Hero-Regular.ttf) format("truetype");
+}
 body{
     font-family: 'Poppins', sans-serif;
 }

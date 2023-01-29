@@ -48,10 +48,14 @@ h5{
     padding: 0.3rem;
     max-height: 30vh;
     overflow: hidden;
+    /* background-color: whitesmoke; */
 }
-
+.input-area:hover {
+    background-color: whitesmoke;
+}
 .input-area:focus {
     outline: 0px solid transparent;
+    
 }
 
 .input-area span {
@@ -66,14 +70,17 @@ h5{
 
 .post-btn {
     padding: 0.3rem 0.9rem;
-    background-color: #31B2DF;
+    background-color: rgb(109, 23, 214);
     border: none;
-    border-radius: 30%;
+    /* border-radius: 10%; */
     color: #fff;
     font-size: 20px;
+    font-weight: normal;
+    font-family: 'Hero';
+}
+.post-btn:enabled{
     font-weight: bold;
 }
-
 .hb-1 {
     margin: 0;
     font-weight: bold;
@@ -103,6 +110,7 @@ h5{
 
 .tools{
     padding-left: 5rem;
+    width: 100%;
 }
 
 .tools .fa-image{
@@ -113,19 +121,37 @@ h5{
     display: inline-block;
     /* background-color: indigo; */
     color:rgb(109, 23, 214);
-    padding: 0.5rem;
-    font-family: sans-serif;
+    padding: 5px;
     border-radius: 0.3rem;
     cursor: pointer;
     margin-top: 1rem;
 }
+#emoji {
+    /* display: inline-block; */
+    color:rgb(109, 23, 214);
+    padding-top: 20px;
+    /* padding: 5px;
+    width: 3rem;
+    cursor: pointer;
+    padding-top: 5px; */
+    
+    
+}
+.emoji-btn{
+    border: none;
+    background-color: transparent;
+}
 
+.icon{
+    color:rgb(109, 23, 214);
+}
 .uploadDiv {
     position: relative;
 }
 
 .uploadDiv span{
     position: absolute;
+    display: none;
 
 }
 
@@ -151,5 +177,13 @@ h5{
 
 .fd-body p{
     margin: 0;
+}
+
+.custom {
+ 
+      padding: 0px !important;
+    }
+.menu {
+    color: black;
 }
 
