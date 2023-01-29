@@ -16,7 +16,7 @@ from collections import namedtuple
 from rest_framework.parsers import MultiPartParser, FormParser
 from .serializers import MessageSerializer
 from rest_framework import permissions
-from .models import GroupMembers, Groups, Message
+from .models import GroupMembers, Groups, Message, UserFollowers
 from rest_framework.generics import (
     ListAPIView,
     RetrieveAPIView,
@@ -184,6 +184,7 @@ class FetchPostsAPIView(APIView):
         # print(row)
         return JsonResponse(dictfetchall(cursor), safe=False)
 
+
 ########################################## GROUP ####################################################
 
 class CreateGroupAPIView(APIView): 
@@ -295,47 +296,79 @@ class GroupDataAPIView(APIView):
             '''SELECT group_id,group_name,created_at FROM core_groups''')
         return JsonResponse(dictfetchall(cursor), safe=False)
 
-# message
 
+################################################################## message
 
-class MessageListView(ListAPIView):
-    serializer_class = MessageSerializer
-    permission_classes = (permissions.AllowAny, )
+class UserMessageAPIView(APIView): 
+    def post(self, request):
+        print(request.data)
+        data = request.data
+        serializer = MessageSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST) 
 
+class FetchMessageAPIView(APIView):
+    def get(self, request):
+        cursor = connection.cursor()
+        cursor.execute(
+            '''SELECT message_id, sender_id, receiver_id,message, sent_at FROM core_message''')
+        return JsonResponse(dictfetchall(cursor), safe=False)
 
-class MessageDetailView(RetrieveAPIView):
-    queryset = Message.objects.all()
-    serializer_class = MessageSerializer
-    permission_classes = (permissions.AllowAny, )
+class UpdateMessageAPIView(APIView): 
+    def put(self, request, pk):
+        message = Message.objects.get(pk=pk)
+        serializer = GroupSerializer(message, data=request.data, context={'request': request})
 
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        non_field_errors = serializer.errors.get('non_field_errors', None)
+        if non_field_errors:
+            return Response({'non_field_errors': non_field_errors}, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class MessageCreateView(CreateAPIView):
-    queryset = Message.objects.all()
-    serializer_class = MessageSerializer
-    permission_classes = (permissions.IsAuthenticated, )
+class DeleteMessageAPIView(APIView):
+    def delete(self, request, pk):
+        try:
+            instance = Message.objects.get(pk=pk)
+            instance.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except Posts.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
+####################################### Follower
 
-class MessageUpdateView(UpdateAPIView):
-    queryset = Message.objects.all()
-    serializer_class = MessageSerializer
-    permission_classes = (permissions.IsAuthenticated, )
-
-
-class MessageDeleteView(DestroyAPIView):
-    queryset = Message.objects.all()
-    serializer_class = MessageSerializer
-    permission_classes = (permissions.IsAuthenticated, )
-
-
-class UserFollowersAPIView(APIView):
+class FollowerAPIView(APIView): 
     def post(self, request):
         data = request.data
-        if data['follow_id'] == '':
-            raise exceptions.APIException("Content is required.")
         serializer = UserFollowersSerializer(data=data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST) 
+
+class FetchFollowingAPIView(APIView):
+    def get(self, request):
+        cursor = connection.cursor()
+        cursor.execute(
+            '''SELECT follow_id, user_id, follower_id FROM core_userfollowers''')
+        return JsonResponse(dictfetchall(cursor), safe=False)
+
+class DeleteFollowerAPIView(APIView):
+    def delete(self, request, pk):
+        try:
+            instance = UserFollowers.objects.get(pk=pk)
+            instance.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except Posts.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+
 
 
 # API TO CREATE

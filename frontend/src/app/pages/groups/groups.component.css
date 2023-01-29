@@ -1,0 +1,38 @@
+.col-4 {
+    border:2 px whitesmoke;
+        
+    }
+.card{
+    background-color: whitesmoke;
+}
+.join-btn {
+    height: 30px;
+    padding: 0;
+
+}
+.add-icon {
+    height: 20px;
+}
+a {
+    text-decoration: none;
+    color: black;
+}
+.list-group{
+    text-align: left;
+    align-content: flex-start;
+    background-color: whitesmoke;
+}
+.card-list {
+    background-color: whitesmoke;
+}
+.list-group-item{
+    background-color: whitesmoke;
+}
+.form-control {
+    width: 100%;
+   
+}
+.txtbox {
+    background-color: whitesmoke;
+}
+
