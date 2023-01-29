@@ -1,7 +1,7 @@
 from django.conf.urls.static import static
 from django.urls import path
 from django.conf import settings
-from .views import DeleteGalleriesAPIView, DeleteMemberAPIView, FetchPostsAPIView, FetchUserFriendsAPIView, FetchUserFriendsRequestAPIView, GroupDataAPIView, GroupDeleteAPIView, LogoutAPIView, PostDeleteAPIView, PostsAPIView, RefreshAPIView, RegisterAPIView, LoginApiView, UpdateGroupNameAPIView, UpdatePostAPIView, UserApiView, UserGalleriesAPIView,UserFriendsAPIView,CreateGroupAPIView, JoinGroupAPIView, MessageListView, MessageDetailView, MessageCreateView, MessageUpdateView, MessageDeleteView, UserFollowersAPIView, UsersAPIView
+from .views import FetchUserFriendsRequestAPIView, FetchUserFriendsAPIView, UsersAPIView, DeleteGalleriesAPIView, DeleteMemberAPIView, FetchPostsAPIView, GroupDataAPIView, GroupDeleteAPIView, LogoutAPIView, PostDeleteAPIView, PostsAPIView, RefreshAPIView, RegisterAPIView, LoginApiView, UpdateGroupNameAPIView, UpdatePostAPIView, UserApiView, UserGalleriesAPIView,UserFriendsAPIView,CreateGroupAPIView, JoinGroupAPIView, CreateMessageAPIView, FecthUserMessageAPIView, UpdateMessageContentAPIView, DeleteMessageAPIView, UserFollowersAPIView, FecthFollowersAPIView, FetchFollowingAPIView, DeleteFollowerAPIView
 
 urlpatterns = [
     path('register', RegisterAPIView.as_view()),
@@ -27,11 +27,13 @@ urlpatterns = [
     path('deletegroup/<int:pk>/', GroupDeleteAPIView.as_view()),
     path('deletemember/<int:pk>/', DeleteMemberAPIView.as_view()),
 
-    path('list/', MessageListView.as_view()),
-    path('create/', MessageCreateView.as_view()),
-    path('<pk>', MessageDetailView.as_view()),
-    path('<pk>/update/', MessageUpdateView.as_view()),
-    path('<pk>/delete/', MessageDeleteView.as_view()),
-    path('userfollow/', UserFollowersAPIView.as_view()),
+    path('message/', CreateMessageAPIView.as_view()),
+    path('fecth_message/', FecthUserMessageAPIView.as_view()),
+    path('updatemessage/', UpdateMessageContentAPIView.as_view()),
+    path('deletemessage/', DeleteMessageAPIView.as_view()),
+    path('followers/', UserFollowersAPIView.as_view()),
+    path('fecth_followers/', FecthFollowersAPIView.as_view()),
+    path('fetch_following/', FetchFollowingAPIView.as_view()),
+    path('deletefollower/', DeleteFollowerAPIView.as_view()),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
