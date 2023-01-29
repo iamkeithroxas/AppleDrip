@@ -17,8 +17,6 @@ from collections import namedtuple
 from rest_framework.parsers import MultiPartParser, FormParser
 from .models import GroupMembers
 
-from .serializers import MessageSerializer
-from rest_framework import permissions
 from .models import GroupMembers, Groups, Message, UserFollowers
 
 
