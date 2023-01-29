@@ -1,11 +1,11 @@
-from django.shortcuts import render 
+from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import exceptions
 from core.authentication import create_access_token, JWTAuthentication, create_refresh_token, decode_refresh_token
 from rest_framework.authentication import get_authorization_header
-from core.models import User, Posts, UserGallery
-from .serializers import GroupSerializer, PostsSerializer, UserGalleriesSerializer, UserSerializer,UserFriendsSerializer,CreateGroupSerializer, JoinGroupSerializer, UserFollowersSerializer
+from core.models import User, Posts, UserGallery, UserFriends
+from .serializers import GroupSerializer, PostsSerializer, UserGalleriesSerializer, UserSerializer, UserFriendsSerializer, CreateGroupSerializer, JoinGroupSerializer, UserFollowersSerializer
 from django.http import JsonResponse
 from django.forms.models import model_to_dict
 from django.core import serializers
@@ -84,6 +84,13 @@ class LogoutAPIView(APIView):
         return response
 
 
+class UsersAPIView(APIView):
+    def get(self, request):
+        users = User.objects.all()
+        serializer = UserSerializer(users, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
 # Post to wall insert sample
 class PostsAPIView(APIView):
     # def post(self, request):
@@ -111,12 +118,13 @@ class PostsAPIView(APIView):
         else:
             return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
 
-    
+
 class UpdatePostAPIView(APIView):
-    
+
     def put(self, request, pk):
         post = Posts.objects.get(pk=pk)
-        serializer = PostsSerializer(post, data=request.data, context={'request': request})
+        serializer = PostsSerializer(
+            post, data=request.data, context={'request': request})
 
         if serializer.is_valid():
             serializer.save()
@@ -125,7 +133,8 @@ class UpdatePostAPIView(APIView):
         if non_field_errors:
             return Response({'non_field_errors': non_field_errors}, status=status.HTTP_400_BAD_REQUEST)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
+
 class PostDeleteAPIView(APIView):
     def delete(self, request, pk):
         try:
@@ -134,12 +143,15 @@ class PostDeleteAPIView(APIView):
             return Response(status=status.HTTP_204_NO_CONTENT)
         except Posts.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
-        
+
+
 class UserGalleriesAPIView(APIView):
     def get(self, request):
         list_galleries = UserGallery.objects.all()
         serializer = UserGalleriesSerializer(list_galleries, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
 class DeleteGalleriesAPIView(APIView):
     def delete(self, request, pk):
         try:
@@ -148,6 +160,7 @@ class DeleteGalleriesAPIView(APIView):
             return Response(status=status.HTTP_204_NO_CONTENT)
         except UserGallery.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
+
 
 def dictfetchall(cursor):
     "Return all rows from a cursor as a dict"
@@ -172,7 +185,7 @@ class FetchPostsAPIView(APIView):
         return JsonResponse(dictfetchall(cursor), safe=False)
 
 
-class CreateGroupAPIView(APIView): 
+class CreateGroupAPIView(APIView):
     def post(self, request):
         data = request.data
         if data['group_id'] == '':
@@ -182,7 +195,8 @@ class CreateGroupAPIView(APIView):
         serializer.save()
         return Response(serializer.data)
 
-class JoinGroupAPIView(APIView): 
+
+class JoinGroupAPIView(APIView):
     def post(self, request):
         data = request.data
         if data['gm_id'] == '':
@@ -192,7 +206,8 @@ class JoinGroupAPIView(APIView):
         serializer.save()
         return Response(serializer.data)
 
-class UserFriendsAPIView(APIView): 
+
+class UserFriendsAPIView(APIView):
     def post(self, request):
         data = request.data
         if data['user_id'] == '':
@@ -202,6 +217,37 @@ class UserFriendsAPIView(APIView):
         serializer.save()
         return Response(serializer.data)
 
+# fetch friends api
+
+
+class FetchUserFriendsAPIView(APIView):
+    def post(self, request):
+        data = request.data
+        if data['user_id'] == '':
+            raise exceptions.APIException("User ID is required.")
+        # friends = UserFriends.objects.filter(user_id=data['user_id'])
+        # serializer = UserFriendsSerializer(friends, many=True)
+        # return Response(serializer.data, status=status.HTTP_200_OK)
+        cursor = connection.cursor()
+        cursor.execute(
+            '''SELECT user_id,first_name,last_name,friend_id,status FROM core_userfriends INNER JOIN core_user ON core_userfriends.friend_id = core_user.id WHERE core_userfriends.user_id = %(select_cond)s''', params={'select_cond': data['user_id']})
+        return JsonResponse(dictfetchall(cursor), safe=False)
+
+
+class FetchUserFriendsRequestAPIView(APIView):
+    def post(self, request):
+        data = request.data
+        if data['user_id'] == '':
+            raise exceptions.APIException("User ID is required.")
+        # friends = UserFriends.objects.filter(user_id=data['user_id'])
+        # serializer = UserFriendsSerializer(friends, many=True)
+        # return Response(serializer.data, status=status.HTTP_200_OK)
+        cursor = connection.cursor()
+        cursor.execute(
+            '''SELECT user_id,first_name,last_name,friend_id,status FROM core_userfriends INNER JOIN core_user ON core_userfriends.user_id = core_user.id WHERE core_userfriends.friend_id = %(select_cond)s''', params={'select_cond': data['user_id']})
+        return JsonResponse(dictfetchall(cursor), safe=False)
+
+
 class GroupDataAPIView(APIView):
     def get(self, request):
         cursor = connection.cursor()
@@ -209,15 +255,19 @@ class GroupDataAPIView(APIView):
             '''SELECT group_id,group_name,created_at FROM core_groups''')
         return JsonResponse(dictfetchall(cursor), safe=False)
 
-#message
+# message
+
+
 class MessageListView(ListAPIView):
     serializer_class = MessageSerializer
     permission_classes = (permissions.AllowAny, )
+
 
 class MessageDetailView(RetrieveAPIView):
     queryset = Message.objects.all()
     serializer_class = MessageSerializer
     permission_classes = (permissions.AllowAny, )
+
 
 class MessageCreateView(CreateAPIView):
     queryset = Message.objects.all()
@@ -236,7 +286,8 @@ class MessageDeleteView(DestroyAPIView):
     serializer_class = MessageSerializer
     permission_classes = (permissions.IsAuthenticated, )
 
-class UserFollowersAPIView(APIView): 
+
+class UserFollowersAPIView(APIView):
     def post(self, request):
         data = request.data
         if data['follow_id'] == '':
@@ -245,10 +296,6 @@ class UserFollowersAPIView(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
-
-
-
-
 
 
 # API TO CREATE

@@ -1,7 +1,7 @@
 from django.conf.urls.static import static
 from django.urls import path
 from django.conf import settings
-from .views import DeleteGalleriesAPIView, FetchPostsAPIView, GroupDataAPIView, LogoutAPIView, PostDeleteAPIView, PostsAPIView, RefreshAPIView, RegisterAPIView, LoginApiView, UpdatePostAPIView, UserApiView, UserGalleriesAPIView,UserFriendsAPIView,CreateGroupAPIView, JoinGroupAPIView, MessageListView, MessageDetailView, MessageCreateView, MessageUpdateView, MessageDeleteView, UserFollowersAPIView
+from .views import DeleteGalleriesAPIView, FetchPostsAPIView, FetchUserFriendsAPIView, FetchUserFriendsRequestAPIView, GroupDataAPIView, LogoutAPIView, PostDeleteAPIView, PostsAPIView, RefreshAPIView, RegisterAPIView, LoginApiView, UpdatePostAPIView, UserApiView, UserGalleriesAPIView,UserFriendsAPIView,CreateGroupAPIView, JoinGroupAPIView, MessageListView, MessageDetailView, MessageCreateView, MessageUpdateView, MessageDeleteView, UserFollowersAPIView, UsersAPIView
 
 urlpatterns = [
     path('register', RegisterAPIView.as_view()),
@@ -9,6 +9,7 @@ urlpatterns = [
     path('user', UserApiView.as_view()),
     path('refresh', RefreshAPIView.as_view()),
     path('logout', LogoutAPIView.as_view()),
+    path('users', UsersAPIView.as_view()),
     path('insert_post', PostsAPIView.as_view()),
     path('update_post/<int:pk>/', UpdatePostAPIView.as_view()),
     path('delete_post/<int:pk>/', PostDeleteAPIView.as_view()),
@@ -16,6 +17,8 @@ urlpatterns = [
     path('my_gallery', UserGalleriesAPIView.as_view()),
     path('delete_gallery/<int:pk>/', DeleteGalleriesAPIView.as_view()),
 
+    path('fetch_friends', FetchUserFriendsAPIView.as_view()),
+    path('fetch_friend_request', FetchUserFriendsRequestAPIView.as_view()),
     path('Addfriend', UserFriendsAPIView.as_view()),
     path('creategroup', CreateGroupAPIView.as_view()),
     path('joingroup', JoinGroupAPIView.as_view()),
