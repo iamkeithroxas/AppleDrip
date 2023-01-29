@@ -29,11 +29,11 @@ urlpatterns = [
 
     path('message', UserMessageAPIView.as_view()),
     path('fetchmessage', FetchMessageAPIView.as_view()),
-    path('updatemessage', UpdateMessageAPIView.as_view()),
-    path('deletemessage', DeleteMessageAPIView.as_view()),
+    path('updatemessage/<int:pk>/', UpdateMessageAPIView.as_view()),
+    path('deletemessage/<int:pk>/', DeleteMessageAPIView.as_view()),
     path('follower', FollowerAPIView.as_view()),
     path('fetchfollower', FetchFollowingAPIView.as_view()),
-    path('deletefollower', DeleteFollowerAPIView.as_view()),
+    path('deletefollower/<int:pk>/', DeleteFollowerAPIView.as_view()),
 
 
 
