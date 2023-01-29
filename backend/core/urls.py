@@ -1,7 +1,7 @@
 from django.conf.urls.static import static
 from django.urls import path
 from django.conf import settings
-from .views import DeleteGalleriesAPIView, FetchPostsAPIView, FetchUserFriendsAPIView, FetchUserFriendsRequestAPIView, GroupDataAPIView, LogoutAPIView, PostDeleteAPIView, PostsAPIView, RefreshAPIView, RegisterAPIView, LoginApiView, UpdatePostAPIView, UserApiView, UserGalleriesAPIView,UserFriendsAPIView,CreateGroupAPIView, JoinGroupAPIView, MessageListView, MessageDetailView, MessageCreateView, MessageUpdateView, MessageDeleteView, UserFollowersAPIView, UsersAPIView
+from .views import DeleteGalleriesAPIView, DeleteMemberAPIView, FetchPostsAPIView, FetchUserFriendsAPIView, FetchUserFriendsRequestAPIView, GroupDataAPIView, GroupDeleteAPIView, LogoutAPIView, PostDeleteAPIView, PostsAPIView, RefreshAPIView, RegisterAPIView, LoginApiView, UpdateGroupNameAPIView, UpdatePostAPIView, UserApiView, UserGalleriesAPIView,UserFriendsAPIView,CreateGroupAPIView, JoinGroupAPIView, MessageListView, MessageDetailView, MessageCreateView, MessageUpdateView, MessageDeleteView, UserFollowersAPIView, UsersAPIView
 
 urlpatterns = [
     path('register', RegisterAPIView.as_view()),
@@ -23,6 +23,9 @@ urlpatterns = [
     path('creategroup', CreateGroupAPIView.as_view()),
     path('joingroup', JoinGroupAPIView.as_view()),
     path('groups', GroupDataAPIView.as_view()),
+    path('updatename/<int:pk>/', UpdateGroupNameAPIView.as_view()),
+    path('deletegroup/<int:pk>/', GroupDeleteAPIView.as_view()),
+    path('deletemember/<int:pk>/', DeleteMemberAPIView.as_view()),
 
     path('list/', MessageListView.as_view()),
     path('create/', MessageCreateView.as_view()),
