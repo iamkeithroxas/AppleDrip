@@ -6,6 +6,14 @@
     font-family: "Hero";
     src: local("Hero"), url(./assets/fonts//Hero-Regular.ttf) format("truetype");
 }
+@font-face {
+    font-family: "Aero";
+    src: local("Aero"), url(./assets/fonts//Aero.ttf) format("truetype");
+}
+@font-face {
+    font-family: "Airstrike";
+    src: local("Airstrike"), url(./assets/fonts//airstrike.ttf) format("truetype");
+}
 body{
     font-family: 'Poppins', sans-serif;
 }

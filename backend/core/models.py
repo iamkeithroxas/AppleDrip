@@ -57,6 +57,7 @@ class UserFriends(models.Model):
 class Groups(models.Model):
     group_id = models.AutoField(primary_key=True)
     group_name = models.CharField(max_length=255)
+    group_photo = models.ImageField(upload_to=image_path, default='group_photo/image.jpg')
     created_at = models. DateTimeField(auto_now_add=True)
 
 

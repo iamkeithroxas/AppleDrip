@@ -53,7 +53,7 @@ class JoinGroupSerializer(ModelSerializer):
 class GroupSerializer(ModelSerializer):
     class Meta:
         model = Groups
-        fields = ['group_id', 'group_name', 'created_at']
+        fields = ['group_id', 'group_name', 'group_photo', 'created_at']
 
 
 class MessageSerializer(ModelSerializer):

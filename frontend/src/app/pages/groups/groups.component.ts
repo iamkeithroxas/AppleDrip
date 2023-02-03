@@ -17,9 +17,6 @@ export class GroupsComponent {
   group_name: new FormControl('')
    
   });
-  // group_id: number = 1;
-  // group_name?: string;
-  // created_at?: string;
 
 
   groups: GroupModel[] = [];
