@@ -306,6 +306,15 @@ class GroupDataAPIView(APIView):
             '''SELECT group_id,group_name,created_at FROM core_groups''')
         return JsonResponse(dictfetchall(cursor), safe=False)
 
+class FetchUserGroups(APIView):
+    def post(self, request):
+        data = request.data
+        if data['user_id'] == '':
+            raise exceptions.APIException("User ID is required.")
+        cursor = connection.cursor()
+        cursor.execute(
+            '''SELECT gm_id, core_groupmembers.group_id,group_name,user_id,joined_at FROM core_groupmembers INNER JOIN core_groups ON core_groupmembers.group_id = core_groups.group_id WHERE core_groupmembers.user_id = %(select_cond)s''', params={'select_cond': data['user_id']})
+        return JsonResponse(dictfetchall(cursor), safe=False)
 
 ################################################################## message
 

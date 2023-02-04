@@ -13,7 +13,7 @@
         </div>
         <div class="p-2 mb-2">
             <a type="button" class="button-links" routerLink="/messages">
-                <mat-icon class="icon" aria-hidden="false" aria-label="Example home icon" fontIcon="message"></mat-icon>Message</a>
+                <mat-icon class="icon" aria-hidden="false" aria-label="Example home icon" fontIcon=" chat_bubble"> </mat-icon>Message</a>
         </div>
         <div class="p-2 mb-2">
             <a type="button" class="button-links" routerLink="/friends">
@@ -32,7 +32,23 @@
                 Profile</a>
         </div>
         <div class="p-2 mt-auto">
-            <a type="button" class="button-links lo" (click)="Logout()"><mat-icon class="icon" aria-hidden="false" aria-label="Example home icon" fontIcon="power_settings_new"></mat-icon>Logout</a>
+        <a type="button" [matMenuTriggerFor]="aboveMenu" class="button-links lo" ><mat-icon class="icon">eject</mat-icon>{{firstname}}</a>
+    <mat-menu #aboveMenu="matMenu" class="matMenu" yPosition="above">
+  <button mat-menu-item class="matMenu-item">
+    <!-- <div class="demo-section">
+        Icon with a badge
+        <mat-icon matBadge="15" matBadgeColor="warn">home</mat-icon>
+          
+      </div> -->
+    <mat-icon matBadge="15" matBadgeColor="warn" class="menu-icon">notifications_active</mat-icon>
+    <p class="menu-text">Notifications</p>
+</button>
+  <button mat-menu-item class="matMenu-item-logout" (click)="Logout()">
+    <mat-icon class="menu-icon" aria-hidden="false" aria-label="Example home icon" fontIcon="power_settings_new"></mat-icon>
+    <p class="menu-text">Logout</p></button>
+</mat-menu>
+
+            
         </div>
     </div>
 </header>

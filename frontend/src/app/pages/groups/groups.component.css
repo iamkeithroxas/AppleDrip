@@ -19,7 +19,7 @@ a {
 }
 .list-group{
     text-align: left;
-    align-content: flex-start;
+  
     background-color: whitesmoke;
 }
 .card-list {
@@ -28,6 +28,9 @@ a {
 .list-group-item{
     background-color: whitesmoke;
 }
+.list-group-item:hover {
+    background-color: rgb(214, 214, 214);
+}
 .form-control {
     width: 100%;
    
@@ -35,4 +38,15 @@ a {
 .txtbox {
     background-color: whitesmoke;
 }
-
+/* .mygroups {
+    margin-right: 50%;
+} */
+/* .icon-dots {
+    color:;
+} */
+.btn-menu{
+   
+    padding: 0%;
+    font-size: 20px;
+    /* color: rgb(19, 139, 139); */
+}

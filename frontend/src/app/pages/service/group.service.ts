@@ -15,4 +15,11 @@ export class GroupService {
   createGroups(params:any) {
     return this.http.post<any>('http://127.0.0.1:8000/api/creategroup',params);
   }
+  joinGroups(params:any) {
+    return this.http.post<any>('http://127.0.0.1:8000/api/joingroup',params);
+  }
+  fetchUserGroups(params:any) {
+    return this.http.post<any>('http://127.0.0.1:8000/api/user_groups',params);
+  }
+  
 }
