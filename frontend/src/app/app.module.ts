@@ -32,7 +32,9 @@ import { GroupsComponent } from './pages/groups/groups.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { AuthGuard } from './guard/auth.guard'
 import {NgbDatepickerModule} from '@ng-bootstrap/ng-bootstrap';
-import { EditProfileModalComponent } from './pages/profile/edit-profile-modal/edit-profile-modal.component'
+import { EditProfileModalComponent } from './pages/profile/edit-profile-modal/edit-profile-modal.component';
+import { EditPostModalComponent } from './pages/home/edit-post-modal/edit-post-modal.component';
+import { WarningModalComponent } from './pages/home/warning-modal/warning-modal.component'
 
 @NgModule({
   declarations: [
@@ -48,6 +50,8 @@ import { EditProfileModalComponent } from './pages/profile/edit-profile-modal/ed
     GroupsComponent,
     ProfileComponent,
     EditProfileModalComponent,
+    EditPostModalComponent,
+    WarningModalComponent,
   ],
   imports: [
     BrowserModule,

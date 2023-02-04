@@ -187,3 +187,10 @@ h5{
     color: black;
 }
 
+.dropdown-toggle::after{
+    display: none;
+}
+
+.option-icon{
+    color: rgb(109, 23, 214);
+}

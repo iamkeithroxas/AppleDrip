@@ -119,6 +119,8 @@ class PostsAPIView(APIView):
             return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
 
 
+
+
 class UpdatePostAPIView(APIView):
 
     def put(self, request, pk):
@@ -173,13 +175,21 @@ def dictfetchall(cursor):
 
 class FetchPostsAPIView(APIView):
     def get(self, request):
-        # posts = Posts.objects.all()
-        # posts = Posts.objects.raw('SELECT * FROM core_posts INNER JOIN core_user ON core_posts.user_id = core_user.id')
-        # serializer = PostsSerializer(posts, many=True)
-        # return JsonResponse(serializer.data, safe=False)
+        
         cursor = connection.cursor()
         cursor.execute(
             '''SELECT user_id,first_name,last_name,post_id,content,image,created_at FROM core_posts INNER JOIN core_user ON core_posts.user_id = core_user.id''')
+        # row = cursor.fetchall()
+        # print(row)
+        return JsonResponse(dictfetchall(cursor), safe=False)
+
+
+class FetchPostAPIView(APIView):
+    def post(self, request):
+        data = request.data
+        cursor = connection.cursor()
+        cursor.execute(
+            '''SELECT user_id,first_name,last_name,post_id,content,image,created_at FROM core_posts INNER JOIN core_user ON core_posts.user_id = core_user.id WHERE core_posts.post_id = %(select_cond)s''', params={'select_cond': data['user_id']})
         # row = cursor.fetchall()
         # print(row)
         return JsonResponse(dictfetchall(cursor), safe=False)

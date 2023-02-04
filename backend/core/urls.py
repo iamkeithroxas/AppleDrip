@@ -1,7 +1,7 @@
 from django.conf.urls.static import static
 from django.urls import path
 from django.conf import settings
-from .views import DeleteFollowerAPIView, DeleteMessageAPIView, FetchFollowingAPIView, FetchMessageAPIView, FetchUserFriendsRequestAPIView, FetchUserFriendsAPIView, FollowerAPIView, UpdateMessageAPIView, UserMessageAPIView, UsersAPIView, DeleteGalleriesAPIView, DeleteMemberAPIView, FetchPostsAPIView, GroupDataAPIView, GroupDeleteAPIView, LogoutAPIView, PostDeleteAPIView, PostsAPIView, RefreshAPIView, RegisterAPIView, LoginApiView, UpdateGroupNameAPIView, UpdatePostAPIView, UserApiView, UserGalleriesAPIView,UserFriendsAPIView,CreateGroupAPIView, JoinGroupAPIView
+from .views import DeleteFollowerAPIView, DeleteMessageAPIView, FetchFollowingAPIView, FetchMessageAPIView, FetchPostAPIView, FetchUserFriendsRequestAPIView, FetchUserFriendsAPIView, FollowerAPIView, UpdateMessageAPIView, UserMessageAPIView, UsersAPIView, DeleteGalleriesAPIView, DeleteMemberAPIView, FetchPostsAPIView, GroupDataAPIView, GroupDeleteAPIView, LogoutAPIView, PostDeleteAPIView, PostsAPIView, RefreshAPIView, RegisterAPIView, LoginApiView, UpdateGroupNameAPIView, UpdatePostAPIView, UserApiView, UserGalleriesAPIView, UserFriendsAPIView, CreateGroupAPIView, JoinGroupAPIView
 
 urlpatterns = [
     path('register', RegisterAPIView.as_view()),
@@ -12,6 +12,7 @@ urlpatterns = [
     path('users', UsersAPIView.as_view()),
     path('insert_post', PostsAPIView.as_view()),
     path('update_post/<int:pk>/', UpdatePostAPIView.as_view()),
+    path('retrieve_user_post', FetchPostAPIView.as_view()),
     path('delete_post/<int:pk>/', PostDeleteAPIView.as_view()),
     path('fetch_post', FetchPostsAPIView.as_view()),
     path('my_gallery', UserGalleriesAPIView.as_view()),
@@ -37,6 +38,6 @@ urlpatterns = [
 
 
 
-    
+
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

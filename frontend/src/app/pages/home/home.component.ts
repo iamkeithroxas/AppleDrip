@@ -1,23 +1,28 @@
 import { Component } from '@angular/core';
-import { PostService } from '../service/post.service'
+import { PostService } from '../service/post.service';
 import { Post } from '../model/post';
 import { SafeUrl, DomSanitizer } from '@angular/platform-browser';
 import { JwtModule, JwtHelperService } from '@auth0/angular-jwt';
-import { UserProfile} from '../model/user-profile'
-import { FeedModel } from '../model/feed.model'
+import { UserProfile } from '../model/user-profile';
+import { FeedModel } from '../model/feed.model';
 import { AuthService } from '../service/auth.service';
-
+import {
+  ModalDismissReasons,
+  NgbDatepickerModule,
+  NgbModal,
+} from '@ng-bootstrap/ng-bootstrap';
+import { EditPostModalComponent } from './edit-post-modal/edit-post-modal.component';
+import { WarningModalComponent } from './warning-modal/warning-modal.component'
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css', './home.component.scss'],
 })
-
 export class HomeComponent {
   public textArea: string = '';
   public isEmojiPickerVisible: boolean = false;
- 
+
   post: string = '';
   hasImage: boolean = false;
   ImageFile = [];
@@ -29,7 +34,6 @@ export class HomeComponent {
   lastname?: string;
   email?: string;
 
-
   feeds: FeedModel[] = [];
   UserToken: UserProfile[] = [];
 
@@ -38,22 +42,25 @@ export class HomeComponent {
   constructor(
     private postService: PostService,
     private sanitizer: DomSanitizer,
-    private auth: AuthService
+    private auth: AuthService,
+    private modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
     this.getUserProfile();
     this.fetchPosts();
   }
+
   public addEmoji(event: any) {
     this.post = `${this.post}${event.emoji.native}`;
     this.isEmojiPickerVisible = false;
- }
+  }
+
   getUserProfile() {
     var data = JSON.parse(localStorage.getItem('user')!);
-    console.log(data)
-    if(data != null){
-      this.UserId = data.id
+    console.log(data);
+    if (data != null) {
+      this.UserId = data.id;
       this.firstname = data.first_name;
       this.lastname = data.last_name;
       this.email = data.email;
@@ -82,12 +89,11 @@ export class HomeComponent {
       image: this.ImageFile,
       created_at: '',
     };
-    // console.log(postData)
-    var formData: any = new FormData()
-    formData.append('user_id', this.UserId)
-    formData.append('content', this.post)
-    formData.append('image', this.ImageFile)
-    formData.append('created_at', '')
+    var formData: any = new FormData();
+    formData.append('user_id', this.UserId);
+    formData.append('content', this.post);
+    formData.append('image', this.ImageFile);
+    formData.append('created_at', '');
 
     this.postService.InsertPost(formData).subscribe((data) => {
       console.log(data);
@@ -95,7 +101,7 @@ export class HomeComponent {
       this.post = '';
       this.postButton = true;
       this.hasImage = false;
-      this.ImageFile = []
+      this.ImageFile = [];
     });
   }
 
@@ -124,5 +130,31 @@ export class HomeComponent {
   removePrevImage() {
     this.hasImage = false;
     console.log('test');
+  }
+
+  EditPost(post_id: number) {
+    const modalRef = this.modalService.open(EditPostModalComponent, {
+      windowClass: 'EditPostModal',
+    });
+    modalRef.componentInstance.fromParent = post_id;
+    modalRef.result.then(
+      (result) => {
+        console.log(result, 'iw');
+      },
+      (reason) => {}
+    );
+  }
+
+  WarningPost(post_id: number) {
+    const modalRef = this.modalService.open(WarningModalComponent, {
+      windowClass: 'WarningModal',
+    });
+    modalRef.componentInstance.fromParent = post_id;
+    modalRef.result.then(
+      (result) => {
+        console.log(result, 'iw');
+      },
+      (reason) => {}
+    );
   }
 }

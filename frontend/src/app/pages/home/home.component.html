@@ -68,13 +68,25 @@
                                     <div class="p-1">
                                         <img [width]="50" [height]="50" src="https://cdn-icons-png.flaticon.com/512/219/219983.png" alt="">
                                     </div>
-                                    <div class="p-1">
-                                        <div class="d-flex flex-row">
-                                            <div class="p-0 me-auto">
+                                    <div class="p-1 flex-grow-1">
+                                        <div class="d-flex">
+                                            <div class="p-1">
                                                 <p class="hb-1">{{feed.first_name}} {{feed.last_name}}</p>
                                             </div>
                                             <div class="ps-1">
                                                 <p class="lt-1">{{feed.created_at | date: 'h:mm a'}}</p>
+                                            </div>
+                                            <div class="ms-auto ps-1" *ngIf="feed.user_id == UserId">
+                                                <div ngbDropdown class="d-inline-block">
+                                                    <a type="button" class="" id="dropdownBasic1" ngbDropdownToggle>
+                                                        <mat-icon>more_horiz</mat-icon>
+                                                    </a>
+                                                    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                                                        <button ngbDropdownItem (click)="EditPost(feed.post_id)">Edit <mat-icon class="float-end option-icon">edit</mat-icon></button>
+                                                        <button ngbDropdownItem (click)="WarningPost(feed.post_id)">Delete <mat-icon class="float-end option-icon">delete</mat-icon></button>
+                                                        <!-- <button ngbDropdownItem>Something else is here</button>  -->
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                         
