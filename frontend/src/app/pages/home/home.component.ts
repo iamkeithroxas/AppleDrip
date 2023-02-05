@@ -33,6 +33,7 @@ export class HomeComponent {
   firstname?: string;
   lastname?: string;
   email?: string;
+  profileImage?: string; 
 
   feeds: FeedModel[] = [];
   UserToken: UserProfile[] = [];
@@ -64,6 +65,7 @@ export class HomeComponent {
       this.firstname = data.first_name;
       this.lastname = data.last_name;
       this.email = data.email;
+      this.profileImage = data.image
     }
   }
 

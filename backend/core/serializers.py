@@ -6,7 +6,7 @@ class UserSerializer(ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'first_name', 'last_name',
-                  'email', 'password', 'date_joined']
+                  'email', 'password', 'image', 'date_joined']
         extra_kwargs = {
             'password': {'write_only': True}
         }
@@ -18,6 +18,12 @@ class UserSerializer(ModelSerializer):
             instance.set_password(password)
         instance.save()
         return instance
+
+
+class ProfileSerializer(ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id','first_name', 'last_name', 'email', 'date_joined', 'image']
 
 
 class PostsSerializer(ModelSerializer):

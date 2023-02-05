@@ -1,5 +1,5 @@
 .edit-profile-modal{
-    padding: 0.5rem;
+    padding: 1.5rem;
 }
 
 ::ng-deep .editProfile-Modal > .modal-dialog{
@@ -7,3 +7,35 @@
     height: auto;
     margin-top: 80px;
 }
+
+.image-container{
+    padding: 0.5rem;
+    width: 100%;
+}
+
+.image-container img{
+    height: 150px;
+    width: 150px;
+    border: 5px solid #fff;
+    border-radius: 100%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.image-container label {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.fileup {
+    display: inline-block;
+    /* background-color: indigo; */
+    color: rgb(109, 23, 214);
+    padding: 5px;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    margin-top: 1rem;
+}
+

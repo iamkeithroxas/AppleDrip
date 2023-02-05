@@ -17,4 +17,8 @@ export class AuthService {
   GetUserInfo() {
     return localStorage.getItem('user');
   }
+
+  UpdateProfile(user_id: number,params: Object){
+    return this.http.put<any>('http://127.0.0.1:8000/api/update_profile/'+ user_id+'/' , params);
+  }
 }

@@ -8,10 +8,10 @@
                 <!-- <a type="button"><i class="fa fa-rotate-right"></i></a> -->
             </div>
         </div>
-        <div class="feed-container">
+        <div class="feed-body">
             <div class="user-image-container">
                 <div class="profile-picture">
-                    <img src="https://cdn-icons-png.flaticon.com/512/219/219983.png" alt="">
+                    <img src="http://127.0.0.1:8000/{{profileImage}}" alt="">
                 </div>
                 <div class="btn-container">
                     <button class="btn btn-light float-end" (click)="open()">Edit profile</button>
@@ -30,42 +30,74 @@
                     <p>0 <b>Friends</b></p>
                 </div>
                 <div class="p-2">
-                    <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="home-tab" data-bs-toggle="tab"
-                                data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane"
-                                aria-selected="true">Posts</button>
+                    <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+                        <li [ngbNavItem]="1">
+                            <a ngbNavLink>Posts</a>
+                            <ng-template ngbNavContent>
+                                <div class="feed-container" *ngFor="let feed of feeds">
+                                    <div class="d-flex flex-column posts">
+                                        <div class="post-header d-flex flex-row">
+                                            <div class="p-1">
+                                                <img class="post-user-image" src="http://127.0.0.1:8000/media/{{feed.p_image}}" alt="">
+                                            </div>
+                                            <div class="p-1 flex-grow-1">
+                                                <div class="d-flex">
+                                                    <div class="p-1">
+                                                        <p class="hb-1">{{feed.first_name}} {{feed.last_name}}</p>
+                                                    </div>
+                                                    <div class="ps-1">
+                                                        <p class="lt-1">{{feed.created_at | date: 'h:mm a'}}</p>
+                                                    </div>
+                                                    <div class="ms-auto ps-1" *ngIf="feed.user_id == UserId">
+                                                        <div ngbDropdown class="d-inline-block">
+                                                            <a type="button" class="" id="dropdownBasic1" ngbDropdownToggle>
+                                                                <mat-icon>more_horiz</mat-icon>
+                                                            </a>
+                                                            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                                                                <!-- <button ngbDropdownItem (click)="EditPost(feed.post_id)">Edit <mat-icon
+                                                                        class="float-end option-icon">edit</mat-icon></button>
+                                                                <button ngbDropdownItem (click)="WarningPost(feed.post_id)">Delete <mat-icon
+                                                                        class="float-end option-icon">delete</mat-icon></button> -->
+                                                                <!-- <button ngbDropdownItem>Something else is here</button>  -->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                
+                                                <p class="post-content">
+                                                    {{feed.content}}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="post-body d-flex flex-column" *ngIf="feed.image != ''">
+                                            <div class="p-0 image-content">
+                                                <img class="image-post" src="http://127.0.0.1:8000/media/{{feed.image}}" alt="">
+                                            </div>
+                                        </div>
+                                
+                                    </div>
+                                </div>
+                            </ng-template>
                         </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="profile-tab" data-bs-toggle="tab"
-                                data-bs-target="#profile-tab-pane" type="button" role="tab"
-                                aria-controls="profile-tab-pane" aria-selected="false">Profile</button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="contact-tab" data-bs-toggle="tab"
-                                data-bs-target="#contact-tab-pane" type="button" role="tab"
-                                aria-controls="contact-tab-pane" aria-selected="false">Contact</button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="disabled-tab" data-bs-toggle="tab"
-                                data-bs-target="#disabled-tab-pane" type="button" role="tab"
-                                aria-controls="disabled-tab-pane" aria-selected="false" disabled>Disabled</button>
+                        <li [ngbNavItem]="2">
+                            <a ngbNavLink>Gallery</a>
+                            <ng-template ngbNavContent>
+                                <p>
+                                    Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko
+                                    farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean
+                                    shorts
+                                    ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit.
+                                    Keytar
+                                    helvetica VHS salvia yr, vero magna velit sapiente labore stumptown. Vegan fanny pack odio cillum wes
+                                    anderson
+                                    8-bit, sustainable jean shorts beard ut DIY ethical culpa terry richardson biodiesel. Art party
+                                    scenester
+                                    stumptown, tumblr butcher vero sint qui sapiente accusamus tattooed echo park.
+                                </p>
+                            </ng-template>
                         </li>
                     </ul>
-                    <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel"
-                            aria-labelledby="home-tab" tabindex="0">
-                            ...</div>
-                        <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab"
-                            tabindex="0">...
-                        </div>
-                        <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab"
-                            tabindex="0">...
-                        </div>
-                        <div class="tab-pane fade" id="disabled-tab-pane" role="tabpanel" aria-labelledby="disabled-tab"
-                            tabindex="0">...
-                        </div>
-                    </div>
+                    <div [ngbNavOutlet]="nav" class="mt-2"></div>
                 </div>
             </div>
         </div>

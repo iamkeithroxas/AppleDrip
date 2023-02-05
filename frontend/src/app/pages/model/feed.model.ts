@@ -5,5 +5,6 @@ export interface FeedModel {
   post_id: number;
   content: string;
   image: string;
+  p_image: object;
   created_at: string;
 }

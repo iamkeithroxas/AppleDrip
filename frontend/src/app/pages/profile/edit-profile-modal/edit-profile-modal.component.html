@@ -1,3 +1,20 @@
 <div class="edit-profile-modal">
-    <h5>Lol</h5>
+    <h5>Edit Profile</h5>
+    <form>
+        <div class="image-container">
+            <input type="file" #image_upload id="upload2" (change)="getImage($event)" hidden />
+            <label for="upload2" class="fileup">
+                <img [src]="ImageSrc" alt="">
+            </label>
+        </div>
+        <div class="mb-3">
+            <label for="firstname" class="form-label">First Name</label>
+            <input type="text" name="first_name" [(ngModel)]="first_name" class="form-control" id="firstname" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+            <label for="lastname" class="form-label">Last Name</label>
+            <input type="text" name="last_name" [(ngModel)]="last_name" class="form-control" id="lastname" aria-describedby="emailHelp">
+        </div>
+        <button type="submit" class="btn btn-primary" (click)="updateUserProfile()">Change</button>
+    </form>
 </div>

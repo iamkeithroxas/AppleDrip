@@ -63,7 +63,7 @@ export class EditPostModalComponent {
 
     this.postService.UpdatePost(this.fromParent, formData).subscribe((data) => {
       console.log(data, 'update');
-      window.location.reload();
+      // window.location.reload();
     });
   }
 

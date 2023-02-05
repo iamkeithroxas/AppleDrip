@@ -2,11 +2,16 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 
+def profile_img_path(instance, filename):
+    return 'profile/{filename}'.format(filename=filename)
+    
 class User(AbstractUser):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     email = models.CharField(max_length=255, unique=True)
     password = models.CharField(max_length=255)
+    image = models.ImageField(
+        upload_to=profile_img_path, default='profile/user.png')
     username = None
 
     USERNAME_FIELD = 'email'
@@ -15,7 +20,6 @@ class User(AbstractUser):
 
 def image_path(instance, filename):
     return 'posts/{filename}'.format(filename=filename)
-
 
 class Posts(models.Model):
     post_id = models.AutoField(primary_key=True)

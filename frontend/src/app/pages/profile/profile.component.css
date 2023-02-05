@@ -1,3 +1,30 @@
+.feed {
+    border-right: 1px solid #F3F3F3;
+    padding-right: 0;
+}
+
+.posts {
+    padding: 0.5rem;
+    border-top: 1px solid #F3F3F3;
+    /* border-bottom: 1px solid #F3F3F3; */
+}
+
+.feed-body {
+    height: 94vh;
+    overflow: auto;
+}
+
+.feed-body::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+    /* make scrollbar transparent */
+}
+
+.post-body {
+    padding-left: 4rem;
+    padding-right: 1rem;
+}
+
 .fade-container-list {
     background-color: #F1F2F3;
     border: none;
@@ -61,4 +88,16 @@
     position: absolute;
     top: 105%;
     left: 80%
+}
+
+.image-post {
+    width: 100%;
+    max-height: 100%;
+    border-radius: 20px;
+}
+
+.post-user-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
 }
