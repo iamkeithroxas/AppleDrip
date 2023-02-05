@@ -6,6 +6,9 @@ import { JwtModule, JwtHelperService } from '@auth0/angular-jwt';
 import { UserProfile } from '../model/user-profile';
 import { FeedModel } from '../model/feed.model';
 import { AuthService } from '../service/auth.service';
+import { GroupService } from '../service/group.service';
+import { GroupModel } from '../model/group'
+import {joinedGroupModel} from '../model/user_groups'
 import {
   ModalDismissReasons,
   NgbDatepickerModule,
@@ -36,6 +39,7 @@ export class HomeComponent {
 
   feeds: FeedModel[] = [];
   UserToken: UserProfile[] = [];
+  u_groups: joinedGroupModel[] = [];
 
   jwtHelper = new JwtHelperService();
 
@@ -43,12 +47,14 @@ export class HomeComponent {
     private postService: PostService,
     private sanitizer: DomSanitizer,
     private auth: AuthService,
+    private groupService: GroupService,
     private modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
     this.getUserProfile();
     this.fetchPosts();
+    this.fetchUserGroups();
   }
 
   public addEmoji(event: any) {
@@ -81,6 +87,20 @@ export class HomeComponent {
       console.log(this.feeds, 'feed');
     });
   }
+  fetchUserGroups() {
+    this.groupService.fetchUserGroups({"user_id":this.UserId}).subscribe((data) => {
+      this.u_groups = data;
+      this.u_groups.sort((a, b) => {
+        const dt1 = Date.parse(a.joined_at);
+        const dt2 = Date.parse(b.joined_at);
+
+        if (dt1 < dt2) return 1;
+        if (dt1 > dt2) return -1;
+        return 0;
+      });
+      console.log(this.u_groups, 'group');
+    });
+  } 
 
   createPost() {
     let postData: Post = {

@@ -219,16 +219,7 @@ class JoinGroupAPIView(APIView):
         else:
             return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST) 
 
-class UserFriendsAPIView(APIView): 
-    def post(self, request):
-        print(request.data)
-        data = request.data
-        serializer = UserFriendsSerializer(data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        else:
-            return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST) 
+
 
 class GroupDataAPIView(APIView):
     def get(self, request):
@@ -269,7 +260,16 @@ class DeleteMemberAPIView(APIView):
             return Response(status=status.HTTP_404_NOT_FOUND) 
 
 # fetch friends api
-
+class UserFriendsAPIView(APIView): 
+    def post(self, request):
+        print(request.data)
+        data = request.data
+        serializer = UserFriendsSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST) 
 
 class FetchUserFriendsAPIView(APIView):
     def post(self, request):
@@ -315,6 +315,7 @@ class FetchUserGroups(APIView):
         cursor.execute(
             '''SELECT gm_id, core_groupmembers.group_id,group_name,user_id,joined_at FROM core_groupmembers INNER JOIN core_groups ON core_groupmembers.group_id = core_groups.group_id WHERE core_groupmembers.user_id = %(select_cond)s''', params={'select_cond': data['user_id']})
         return JsonResponse(dictfetchall(cursor), safe=False)
+
 
 ################################################################## message
 
