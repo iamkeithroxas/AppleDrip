@@ -1,7 +1,7 @@
 from django.conf.urls.static import static
 from django.urls import path
 from django.conf import settings
-from .views import DeleteFollowerAPIView, DeleteMessageAPIView, FetchFollowingAPIView, FetchMessageAPIView, FetchPostAPIView, FetchUserFriendsRequestAPIView, FetchUserFriendsAPIView, FetchUserGroups, FollowerAPIView, UpdateMessageAPIView, UserMessageAPIView, UsersAPIView, DeleteGalleriesAPIView, DeleteMemberAPIView, FetchPostsAPIView, GroupDataAPIView, GroupDeleteAPIView, LogoutAPIView, PostDeleteAPIView, PostsAPIView, RefreshAPIView, RegisterAPIView, LoginApiView, UpdateGroupNameAPIView, UpdatePostAPIView, UserApiView, UserGalleriesAPIView, UserFriendsAPIView, CreateGroupAPIView, JoinGroupAPIView
+from .views import DeleteFollowerAPIView, DeleteMessageAPIView, FetchFollowingAPIView, FetchMessageAPIView, FetchPostAPIView, FetchProfilePostAPIView, FetchUserFriendsRequestAPIView, FetchUserFriendsAPIView, FetchUserGroups, FollowerAPIView, UpdateMessageAPIView, UpdateUserAPIView, UserMessageAPIView, UsersAPIView, DeleteGalleriesAPIView, DeleteMemberAPIView, FetchPostsAPIView, GroupDataAPIView, GroupDeleteAPIView, LogoutAPIView, PostDeleteAPIView, PostsAPIView, RefreshAPIView, RegisterAPIView, LoginApiView, UpdateGroupNameAPIView, UpdatePostAPIView, UserApiView, UserGalleriesAPIView, UserFriendsAPIView, CreateGroupAPIView, JoinGroupAPIView
 
 urlpatterns = [
     path('register', RegisterAPIView.as_view()),
@@ -37,7 +37,8 @@ urlpatterns = [
     path('fetchfollower', FetchFollowingAPIView.as_view()),
     path('deletefollower/<int:pk>/', DeleteFollowerAPIView.as_view()),
 
-
+    path('fetch_profile_post', FetchProfilePostAPIView.as_view()),
+    path('update_profile/<int:pk>/', UpdateUserAPIView.as_view()),
 
 
 
