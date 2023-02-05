@@ -13,4 +13,8 @@ export class ProfileService {
   fetchProfilePost(params: Object) {
     return this.http.post<any>('http://127.0.0.1:8000/api/fetch_profile_post', params);
   }
+
+  fetchUserInfo(params: Object) {
+    return this.http.post<any>('http://127.0.0.1:8000/api/member', params);
+  }
 }

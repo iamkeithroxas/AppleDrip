@@ -17,14 +17,14 @@
             <div class="friend-section" *ngFor="let friend of friends" >
                 <div class="d-flex flex-row list-container" *ngIf="friend.status == 1">
                     <div class="name-holder">
-                        <p>{{friend.first_name}} {{friend.last_name}}</p>
+                        <a type="button" [routerLink]="['/view-profile', friend.user_id]">{{friend.first_name}} {{friend.last_name}}</a>
                     </div>
                 </div>
             </div>
             <div class="friend-section" *ngFor="let friend of friends2" >
                 <div class="d-flex flex-row list-container" *ngIf="friend.status == 1">
                     <div class="name-holder">
-                        <p>{{friend.first_name}} {{friend.last_name}}</p>
+                        <a type="button" [routerLink]="['/view-profile', friend.user_id]">{{friend.first_name}} {{friend.last_name}}</a>
                     </div>
                 </div>
             </div>
@@ -36,7 +36,7 @@
             <div class="friend-section" *ngFor="let friend of friendRequest">
                 <div class="d-flex flex-row list-container">
                     <div class="name-holder">
-                        <p>{{friend.first_name}} {{friend.last_name}}</p>
+                        <a type="button" [routerLink]="['/view-profile', friend.user_id]">{{friend.first_name}} {{friend.last_name}}</a>
                     </div>
                     <div class="p-1 ms-auto">
                         <button class="btn btn-light" (click)="AcceptFriendRequest(friend.frnd_id)">Accept</button>
@@ -51,7 +51,7 @@
             <div class="friend-section" *ngFor="let friend of sentRequests">
                 <div class="d-flex flex-row list-container">
                     <div class="name-holder">
-                        <p>{{friend.first_name}} {{friend.last_name}}</p>
+                        <a type="button" [routerLink]="['/view-profile', friend.user_id]">{{friend.first_name}} {{friend.last_name}}</a>
                     </div>
                     <div class="p-1 ms-auto">
                         <button class="btn btn-light" (click)="CancelFriendRequest(friend.frnd_id)">Cancel Request</button>

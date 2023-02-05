@@ -105,6 +105,13 @@ class UpdateUserAPIView(APIView):
             return Response({'non_field_errors': non_field_errors}, status=status.HTTP_400_BAD_REQUEST)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class FetchUserInfoAPIView(APIView):
+    def post(self, request):
+        data = request.data
+        user = User.objects.filter(pk=data['user_id'])
+        serializer = ProfileSerializer(user, many=True)
+        return Response(serializer.data)
+
 
 # Post to wall insert sample
 class PostsAPIView(APIView):

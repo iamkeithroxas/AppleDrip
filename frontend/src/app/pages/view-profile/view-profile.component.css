@@ -1,0 +1,103 @@
+.feed {
+    border-right: 1px solid #F3F3F3;
+    padding-right: 0;
+}
+
+.posts {
+    padding: 0.5rem;
+    border-top: 1px solid #F3F3F3;
+    /* border-bottom: 1px solid #F3F3F3; */
+}
+
+.feed-body {
+    height: 94vh;
+    overflow: auto;
+}
+
+.feed-body::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+    /* make scrollbar transparent */
+}
+
+.post-body {
+    padding-left: 4rem;
+    padding-right: 1rem;
+}
+
+.fade-container-list {
+    background-color: #F1F2F3;
+    border: none;
+    border-radius: 20px;
+
+}
+
+.fd-header {
+    padding-top: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.fd-header h4 {
+    font-weight: bold;
+}
+
+.fd-body {
+    padding-left: 1rem;
+}
+
+.fd-body p {
+    margin: 0;
+}
+
+.user-image-container {
+    background-color: #CCD6E0;
+    height: 25vh;
+    position: relative;
+    margin-bottom: 5rem;
+}
+
+.profile-picture {
+    position: absolute;
+    top: 65%;
+    left: 5%
+}
+
+.profile-picture img {
+    height: 150px;
+    width: 150px;
+    border: 5px solid #fff;
+    border-radius: 100%;
+}
+
+.info-container {
+    padding: 1rem;
+}
+
+.info-container h5 {
+    font-weight: bold;
+    margin: 0;
+}
+
+.info-container label {
+    font-size: 14px;
+    color: #737474;
+}
+
+.btn-container {
+    position: absolute;
+    top: 105%;
+    left: 80%
+}
+
+.image-post {
+    width: 100%;
+    max-height: 100%;
+    border-radius: 20px;
+}
+
+.post-user-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}

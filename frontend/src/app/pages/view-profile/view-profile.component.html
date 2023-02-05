@@ -1,0 +1,133 @@
+<div class="row">
+    <div class="col-md-7 feed">
+        <div class="p-2 d-flex justify-content-between feed-header">
+            <div class="p-0">
+                <h5>{{firstname}} {{lastname}}</h5>
+            </div>
+            <div class="p-0">
+                <!-- <a type="button"><i class="fa fa-rotate-right"></i></a> -->
+            </div>
+        </div>
+        <div class="feed-body">
+            <div class="user-image-container">
+                <div class="profile-picture">
+                    <img src="http://127.0.0.1:8000/{{profileImage}}" alt="">
+                </div>
+                <div class="btn-container">
+                    <button class="btn btn-light float-end" (click)="open()">Edit profile</button>
+                </div>
+            </div>
+
+            <div class="info-container">
+                <div class="p-2">
+                    <h5>{{firstname}} {{lastname}}</h5>
+                    <label>{{email}}</label>
+                </div>
+                <div class="p-2">
+                    <label><i class="fa fa-calendar"></i> Joined {{date_joined | date: 'MMMM d'}}</label>
+                </div>
+                <div class="p-2">
+                    <p>0 <b>Friends</b></p>
+                </div>
+                <div class="p-2">
+                    <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+                        <li [ngbNavItem]="1">
+                            <a ngbNavLink>Posts</a>
+                            <ng-template ngbNavContent>
+                                <div class="feed-container" *ngFor="let feed of feeds">
+                                    <div class="d-flex flex-column posts">
+                                        <div class="post-header d-flex flex-row">
+                                            <div class="p-1">
+                                                <img class="post-user-image" src="http://127.0.0.1:8000/media/{{feed.p_image}}" alt="">
+                                            </div>
+                                            <div class="p-1 flex-grow-1">
+                                                <div class="d-flex">
+                                                    <div class="p-1">
+                                                        <p class="hb-1">{{feed.first_name}} {{feed.last_name}}</p>
+                                                    </div>
+                                                    <div class="ps-1">
+                                                        <p class="lt-1">{{feed.created_at | date: 'h:mm a'}}</p>
+                                                    </div>
+                                                    <div class="ms-auto ps-1" *ngIf="feed.user_id == loggedUser">
+                                                        <div ngbDropdown class="d-inline-block">
+                                                            <a type="button" class="" id="dropdownBasic1" ngbDropdownToggle>
+                                                                <mat-icon>more_horiz</mat-icon>
+                                                            </a>
+                                                            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                                                                <!-- <button ngbDropdownItem (click)="EditPost(feed.post_id)">Edit <mat-icon
+                                                                        class="float-end option-icon">edit</mat-icon></button>
+                                                                <button ngbDropdownItem (click)="WarningPost(feed.post_id)">Delete <mat-icon
+                                                                        class="float-end option-icon">delete</mat-icon></button> -->
+                                                                <!-- <button ngbDropdownItem>Something else is here</button>  -->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                
+                                                <p class="post-content">
+                                                    {{feed.content}}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="post-body d-flex flex-column" *ngIf="feed.image != ''">
+                                            <div class="p-0 image-content">
+                                                <img class="image-post" src="http://127.0.0.1:8000/media/{{feed.image}}" alt="">
+                                            </div>
+                                        </div>
+                                
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </li>
+                        <li [ngbNavItem]="2">
+                            <a ngbNavLink>Gallery</a>
+                            <ng-template ngbNavContent>
+                                <p>
+                                    Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko
+                                    farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean
+                                    shorts
+                                    ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit.
+                                    Keytar
+                                    helvetica VHS salvia yr, vero magna velit sapiente labore stumptown. Vegan fanny pack odio cillum wes
+                                    anderson
+                                    8-bit, sustainable jean shorts beard ut DIY ethical culpa terry richardson biodiesel. Art party
+                                    scenester
+                                    stumptown, tumblr butcher vero sint qui sapiente accusamus tattooed echo park.
+                                </p>
+                            </ng-template>
+                        </li>
+                    </ul>
+                    <div [ngbNavOutlet]="nav" class="mt-2"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-5 sub-section">
+        <div class="mt-3 fade-container-list">
+            <div class="fd-header">
+                <h4>Friends</h4>
+            </div>
+            <div class="fd-body">
+                <div class="p-1">
+                    <p>Keith Roxas</p>
+                </div>
+                <div class="p-1">
+                    <p>Vincent Guerzon</p>
+                </div>
+            </div>
+        </div>
+        <div class="mt-3 fade-container-list">
+            <div class="fd-header">
+                <h4>Groups</h4>
+            </div>
+            <div class="fd-body">
+                <div class="p-1">
+                    <p>It Experts</p>
+                </div>
+                <div class="p-1">
+                    <p>Crypto World</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,7 +1,7 @@
 from django.conf.urls.static import static
 from django.urls import path
 from django.conf import settings
-from .views import DeleteFollowerAPIView, DeleteFriendRequestAPIView, DeleteMessageAPIView, FetchFollowingAPIView, FetchMessageAPIView, FetchPostAPIView, FetchProfilePostAPIView, FetchUserFriendsOnlyAPIView, FetchUserFriendsRequestAPIView, FetchUserFriendsAPIView, FetchUserFriendsSentRequestAPIView, FetchUserGroups, FollowerAPIView, UpdateFriendRequestAPIView, UpdateMessageAPIView, UpdateUserAPIView, UserMessageAPIView, UsersAPIView, DeleteGalleriesAPIView, DeleteMemberAPIView, FetchPostsAPIView, GroupDataAPIView, GroupDeleteAPIView, LogoutAPIView, PostDeleteAPIView, PostsAPIView, RefreshAPIView, RegisterAPIView, LoginApiView, UpdateGroupNameAPIView, UpdatePostAPIView, UserApiView, UserGalleriesAPIView, UserFriendsAPIView, CreateGroupAPIView, JoinGroupAPIView
+from .views import DeleteFollowerAPIView, DeleteFriendRequestAPIView, DeleteMessageAPIView, FetchFollowingAPIView, FetchMessageAPIView, FetchPostAPIView, FetchProfilePostAPIView, FetchUserFriendsOnlyAPIView, FetchUserFriendsRequestAPIView, FetchUserFriendsAPIView, FetchUserFriendsSentRequestAPIView, FetchUserGroups, FetchUserInfoAPIView, FollowerAPIView, UpdateFriendRequestAPIView, UpdateMessageAPIView, UpdateUserAPIView, UserMessageAPIView, UsersAPIView, DeleteGalleriesAPIView, DeleteMemberAPIView, FetchPostsAPIView, GroupDataAPIView, GroupDeleteAPIView, LogoutAPIView, PostDeleteAPIView, PostsAPIView, RefreshAPIView, RegisterAPIView, LoginApiView, UpdateGroupNameAPIView, UpdatePostAPIView, UserApiView, UserGalleriesAPIView, UserFriendsAPIView, CreateGroupAPIView, JoinGroupAPIView
 
 urlpatterns = [
     path('register', RegisterAPIView.as_view()),
@@ -44,6 +44,7 @@ urlpatterns = [
 
     path('fetch_profile_post', FetchProfilePostAPIView.as_view()),
     path('update_profile/<int:pk>/', UpdateUserAPIView.as_view()),
+    path('member', FetchUserInfoAPIView.as_view()),
 
 
 

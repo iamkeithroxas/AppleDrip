@@ -36,7 +36,8 @@ import { AuthGuard } from './guard/auth.guard'
 import {NgbDatepickerModule} from '@ng-bootstrap/ng-bootstrap';
 import { EditProfileModalComponent } from './pages/profile/edit-profile-modal/edit-profile-modal.component';
 import { EditPostModalComponent } from './pages/home/edit-post-modal/edit-post-modal.component';
-import { WarningModalComponent } from './pages/home/warning-modal/warning-modal.component'
+import { WarningModalComponent } from './pages/home/warning-modal/warning-modal.component';
+import { ViewProfileComponent } from './pages/view-profile/view-profile.component'
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { WarningModalComponent } from './pages/home/warning-modal/warning-modal.
     EditProfileModalComponent,
     EditPostModalComponent,
     WarningModalComponent,
+    ViewProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -132,6 +134,18 @@ import { WarningModalComponent } from './pages/home/warning-modal/warning-modal.
           {
             path: '',
             component: ProfileComponent,
+            outlet: 'child1',
+          },
+        ],
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'view-profile/:id',
+        component: PagesComponent,
+        children: [
+          {
+            path: '',
+            component: ViewProfileComponent,
             outlet: 'child1',
           },
         ],
