@@ -50,3 +50,15 @@ a {
     font-size: 20px;
     /* color: rgb(19, 139, 139); */
 }
+.matMenu, .matMenu-item, .logout-item {
+    background-color: white;
+}
+.menu-icon, .menu-text {
+    color: black;
+}
+.logout-item:hover {
+    background-color: rgb(255, 182, 182);
+}
+.matMenu-item:hover{
+    background-color: rgb(199, 153, 242);
+}

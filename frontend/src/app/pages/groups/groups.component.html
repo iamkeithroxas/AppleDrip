@@ -79,18 +79,18 @@
                           <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
                             <mat-icon>more_vert</mat-icon>
                           </button>
-                          <mat-menu #menu="matMenu">
-                            <button mat-menu-item>
-                              <mat-icon>view_compact</mat-icon>
-                              <span>View Group</span>
+                          <mat-menu class="matMenu" #menu="matMenu">
+                            <button mat-menu-item class="matMenu-item">
+                              <mat-icon class="menu-icon">view_compact</mat-icon>
+                              <span class="menu-text">View Group</span>
                             </button>
                             <!-- <button mat-menu-item disabled>
                               <mat-icon>group_add</mat-icon>
                               <span>Join Group</span>
                             </button> -->
-                            <button mat-menu-item>
-                              <mat-icon>exit_to_app</mat-icon>
-                              <span>Leave Group</span>
+                            <button mat-menu-item class="logout-item">
+                              <mat-icon class="menu-icon">exit_to_app</mat-icon>
+                              <span class="menu-text">Leave Group</span>
                             </button>
                           </mat-menu>
                         </div>
@@ -121,14 +121,14 @@
                           <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
                             <mat-icon>more_vert</mat-icon>
                           </button>
-                          <mat-menu #menu="matMenu">
-                            <button mat-menu-item>
-                              <mat-icon>view_compact</mat-icon>
-                              <span>View Group</span>
+                          <mat-menu #menu="matMenu" class="matMenu">
+                            <button class="matMenu-item" mat-menu-item>
+                              <mat-icon class="menu-icon">view_compact</mat-icon>
+                              <span class="menu-text">View Group</span>
                             </button>
-                            <button mat-menu-item (click)="joinGroup(UserId,group.group_id)" >
-                              <mat-icon>group_add</mat-icon>
-                              <span>Join Group</span>
+                            <button class="matMenu-item" mat-menu-item (click)="joinGroup(UserId,group.group_id)" >
+                              <mat-icon class="menu-icon">group_add</mat-icon>
+                              <span class="menu-text">Join Group</span>
                             </button>
                           
                           </mat-menu>
