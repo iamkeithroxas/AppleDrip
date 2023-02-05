@@ -17,6 +17,8 @@ import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatBadgeModule} from '@angular/material/badge';
 
 import { AppComponent } from './app.component';
 import { AuthComponent } from './auth/auth.component';
@@ -72,6 +74,8 @@ import { WarningModalComponent } from './pages/home/warning-modal/warning-modal.
     MatChipsModule,
     MatMenuModule,
     MatSidenavModule,
+    MatToolbarModule,
+    MatBadgeModule,
     RouterModule.forRoot([
       {
         path: '',

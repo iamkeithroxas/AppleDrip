@@ -1,7 +1,7 @@
 from django.conf.urls.static import static
 from django.urls import path
 from django.conf import settings
-from .views import DeleteFollowerAPIView, DeleteMessageAPIView, FetchFollowingAPIView, FetchMessageAPIView, FetchPostAPIView, FetchProfilePostAPIView, FetchUserFriendsRequestAPIView, FetchUserFriendsAPIView, FollowerAPIView, UpdateMessageAPIView, UpdateUserAPIView, UserMessageAPIView, UsersAPIView, DeleteGalleriesAPIView, DeleteMemberAPIView, FetchPostsAPIView, GroupDataAPIView, GroupDeleteAPIView, LogoutAPIView, PostDeleteAPIView, PostsAPIView, RefreshAPIView, RegisterAPIView, LoginApiView, UpdateGroupNameAPIView, UpdatePostAPIView, UserApiView, UserGalleriesAPIView, UserFriendsAPIView, CreateGroupAPIView, JoinGroupAPIView
+from .views import DeleteFollowerAPIView, DeleteMessageAPIView, FetchFollowingAPIView, FetchMessageAPIView, FetchPostAPIView, FetchUserFriendsRequestAPIView, FetchUserFriendsAPIView, FetchUserGroups, FollowerAPIView, UpdateMessageAPIView, UserMessageAPIView, UsersAPIView, DeleteGalleriesAPIView, DeleteMemberAPIView, FetchPostsAPIView, GroupDataAPIView, GroupDeleteAPIView, LogoutAPIView, PostDeleteAPIView, PostsAPIView, RefreshAPIView, RegisterAPIView, LoginApiView, UpdateGroupNameAPIView, UpdatePostAPIView, UserApiView, UserGalleriesAPIView, UserFriendsAPIView, CreateGroupAPIView, JoinGroupAPIView
 
 urlpatterns = [
     path('register', RegisterAPIView.as_view()),
@@ -24,6 +24,7 @@ urlpatterns = [
     path('creategroup', CreateGroupAPIView.as_view()),
     path('joingroup', JoinGroupAPIView.as_view()),
     path('groups', GroupDataAPIView.as_view()),
+     path('user_groups', FetchUserGroups.as_view()),
     path('updatename/<int:pk>/', UpdateGroupNameAPIView.as_view()),
     path('deletegroup/<int:pk>/', GroupDeleteAPIView.as_view()),
     path('deletemember/<int:pk>/', DeleteMemberAPIView.as_view()),
@@ -36,8 +37,7 @@ urlpatterns = [
     path('fetchfollower', FetchFollowingAPIView.as_view()),
     path('deletefollower/<int:pk>/', DeleteFollowerAPIView.as_view()),
 
-    path('fetch_profile_post', FetchProfilePostAPIView.as_view()),
-    path('update_profile/<int:pk>/', UpdateUserAPIView.as_view()),
+
 
 
 
