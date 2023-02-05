@@ -253,3 +253,6 @@ a {
 .option-icon{
     color: rgb(109, 23, 214);
 }
+.groups-list:hover{
+    background-color: rgb(230, 203, 255);
+}

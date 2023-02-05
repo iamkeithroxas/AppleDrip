@@ -70,3 +70,25 @@
     font-size: 15px;
     float: right;
 }
+.form-floating {
+    position: fixed;
+   width: 28%;
+   
+}
+.send-btn-div {
+    margin-top: 10px;
+}
+.send-btn {
+    background-color: whitesmoke;
+}
+.send-btn:active {
+    background-color: rgb(211, 166, 252) ;
+    border: 1px solid blueviolet;
+}
+.send-icon {
+   
+    color: blueviolet;
+}
+.card-title{
+    font-weight: bold;
+}
