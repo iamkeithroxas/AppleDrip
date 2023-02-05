@@ -38,7 +38,7 @@ import { EditProfileModalComponent } from './pages/profile/edit-profile-modal/ed
 import { EditPostModalComponent } from './pages/home/edit-post-modal/edit-post-modal.component';
 import { WarningModalComponent } from './pages/home/warning-modal/warning-modal.component';
 import { ViewProfileComponent } from './pages/view-profile/view-profile.component'
-
+import { ViewGroupComponent } from './pages/view-group/view-group.component'
 @NgModule({
   declarations: [
     AppComponent,
@@ -56,6 +56,7 @@ import { ViewProfileComponent } from './pages/view-profile/view-profile.componen
     EditPostModalComponent,
     WarningModalComponent,
     ViewProfileComponent,
+    ViewGroupComponent,
   ],
   imports: [
     BrowserModule,
