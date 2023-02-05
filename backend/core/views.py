@@ -134,8 +134,6 @@ class PostsAPIView(APIView):
             return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
 
 
-
-
 class UpdatePostAPIView(APIView):
 
     def put(self, request, pk):
@@ -190,10 +188,10 @@ def dictfetchall(cursor):
 
 class FetchPostsAPIView(APIView):
     def get(self, request):
-        
+
         cursor = connection.cursor()
         cursor.execute(
-            '''SELECT user_id,first_name,last_name,post_id,content,image,created_at FROM core_posts INNER JOIN core_user ON core_posts.user_id = core_user.id''')
+            '''SELECT user_id,first_name,last_name,post_id,content,core_posts.image,core_user.image as p_image,created_at FROM core_posts INNER JOIN core_user ON core_posts.user_id = core_user.id''')
         # row = cursor.fetchall()
         # print(row)
         return JsonResponse(dictfetchall(cursor), safe=False)
@@ -204,7 +202,7 @@ class FetchPostAPIView(APIView):
         data = request.data
         cursor = connection.cursor()
         cursor.execute(
-            '''SELECT user_id,first_name,last_name,post_id,content,image,created_at FROM core_posts INNER JOIN core_user ON core_posts.user_id = core_user.id WHERE core_posts.post_id = %(select_cond)s''', params={'select_cond': data['user_id']})
+            '''SELECT user_id,first_name,last_name,post_id,content,core_posts.image,created_at FROM core_posts INNER JOIN core_user ON core_posts.user_id = core_user.id WHERE core_posts.post_id = %(select_cond)s''', params={'select_cond': data['user_id']})
         # row = cursor.fetchall()
         # print(row)
         return JsonResponse(dictfetchall(cursor), safe=False)
@@ -223,7 +221,7 @@ class FetchProfilePostAPIView(APIView):
 
 ########################################## GROUP ####################################################
 
-class CreateGroupAPIView(APIView): 
+class CreateGroupAPIView(APIView):
     def post(self, request):
         print(request.data)
         data = request.data
@@ -232,9 +230,10 @@ class CreateGroupAPIView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
-            return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST) 
+            return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
 
-class JoinGroupAPIView(APIView): 
+
+class JoinGroupAPIView(APIView):
     def post(self, request):
         print(request.data)
         data = request.data
@@ -243,8 +242,19 @@ class JoinGroupAPIView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
-            return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST) 
+            return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
 
+
+class UserFriendsAPIView(APIView):
+    def post(self, request):
+        print(request.data)
+        data = request.data
+        serializer = UserFriendsSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
 
 
 class GroupDataAPIView(APIView):
@@ -254,10 +264,12 @@ class GroupDataAPIView(APIView):
             '''SELECT group_id,group_name,created_at FROM core_groups''')
         return JsonResponse(dictfetchall(cursor), safe=False)
 
-class UpdateGroupNameAPIView(APIView): 
+
+class UpdateGroupNameAPIView(APIView):
     def put(self, request, pk):
         group = Groups.objects.get(pk=pk)
-        serializer = GroupSerializer(group, data=request.data, context={'request': request})
+        serializer = GroupSerializer(
+            group, data=request.data, context={'request': request})
 
         if serializer.is_valid():
             serializer.save()
@@ -266,6 +278,7 @@ class UpdateGroupNameAPIView(APIView):
         if non_field_errors:
             return Response({'non_field_errors': non_field_errors}, status=status.HTTP_400_BAD_REQUEST)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class GroupDeleteAPIView(APIView):
     def delete(self, request, pk):
@@ -276,6 +289,7 @@ class GroupDeleteAPIView(APIView):
         except Posts.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
+
 class DeleteMemberAPIView(APIView):
     def delete(self, request, pk):
         try:
@@ -283,19 +297,10 @@ class DeleteMemberAPIView(APIView):
             instance.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
         except Posts.DoesNotExist:
-            return Response(status=status.HTTP_404_NOT_FOUND) 
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
 # fetch friends api
-class UserFriendsAPIView(APIView): 
-    def post(self, request):
-        print(request.data)
-        data = request.data
-        serializer = UserFriendsSerializer(data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        else:
-            return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST) 
+
 
 class FetchUserFriendsAPIView(APIView):
     def post(self, request):
@@ -332,20 +337,10 @@ class GroupDataAPIView(APIView):
             '''SELECT group_id,group_name,created_at FROM core_groups''')
         return JsonResponse(dictfetchall(cursor), safe=False)
 
-class FetchUserGroups(APIView):
-    def post(self, request):
-        data = request.data
-        if data['user_id'] == '':
-            raise exceptions.APIException("User ID is required.")
-        cursor = connection.cursor()
-        cursor.execute(
-            '''SELECT gm_id, core_groupmembers.group_id,group_name,user_id,joined_at FROM core_groupmembers INNER JOIN core_groups ON core_groupmembers.group_id = core_groups.group_id WHERE core_groupmembers.user_id = %(select_cond)s''', params={'select_cond': data['user_id']})
-        return JsonResponse(dictfetchall(cursor), safe=False)
 
+# message
 
-################################################################## message
-
-class UserMessageAPIView(APIView): 
+class UserMessageAPIView(APIView):
     def post(self, request):
         print(request.data)
         data = request.data
@@ -354,7 +349,8 @@ class UserMessageAPIView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
-            return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST) 
+            return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
+
 
 class FetchMessageAPIView(APIView):
     def get(self, request):
@@ -363,10 +359,12 @@ class FetchMessageAPIView(APIView):
             '''SELECT message_id, sender_id, receiver_id,message, sent_at FROM core_message''')
         return JsonResponse(dictfetchall(cursor), safe=False)
 
-class UpdateMessageAPIView(APIView): 
+
+class UpdateMessageAPIView(APIView):
     def put(self, request, pk):
         message = Message.objects.get(pk=pk)
-        serializer = GroupSerializer(message, data=request.data, context={'request': request})
+        serializer = GroupSerializer(
+            message, data=request.data, context={'request': request})
 
         if serializer.is_valid():
             serializer.save()
@@ -375,6 +373,7 @@ class UpdateMessageAPIView(APIView):
         if non_field_errors:
             return Response({'non_field_errors': non_field_errors}, status=status.HTTP_400_BAD_REQUEST)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class DeleteMessageAPIView(APIView):
     def delete(self, request, pk):
@@ -385,9 +384,10 @@ class DeleteMessageAPIView(APIView):
         except Posts.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
-####################################### Follower
+# Follower
 
-class FollowerAPIView(APIView): 
+
+class FollowerAPIView(APIView):
     def post(self, request):
         data = request.data
         serializer = UserFollowersSerializer(data=data)
@@ -395,7 +395,8 @@ class FollowerAPIView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
-            return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST) 
+            return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
+
 
 class FetchFollowingAPIView(APIView):
     def get(self, request):
@@ -403,6 +404,7 @@ class FetchFollowingAPIView(APIView):
         cursor.execute(
             '''SELECT follow_id, user_id, follower_id FROM core_userfollowers''')
         return JsonResponse(dictfetchall(cursor), safe=False)
+
 
 class DeleteFollowerAPIView(APIView):
     def delete(self, request, pk):
@@ -412,9 +414,6 @@ class DeleteFollowerAPIView(APIView):
             return Response(status=status.HTTP_204_NO_CONTENT)
         except Posts.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
-
-
-
 
 
 # API TO CREATE
