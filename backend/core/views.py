@@ -245,18 +245,6 @@ class JoinGroupAPIView(APIView):
             return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
 
 
-class UserFriendsAPIView(APIView):
-    def post(self, request):
-        print(request.data)
-        data = request.data
-        serializer = UserFriendsSerializer(data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        else:
-            return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
-
-
 class GroupDataAPIView(APIView):
     def get(self, request):
         cursor = connection.cursor()
@@ -302,6 +290,18 @@ class DeleteMemberAPIView(APIView):
 # fetch friends api
 
 
+class UserFriendsAPIView(APIView):
+    def post(self, request):
+        print(request.data)
+        data = request.data
+        serializer = UserFriendsSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
+
+
 class FetchUserFriendsAPIView(APIView):
     def post(self, request):
         data = request.data
@@ -335,6 +335,17 @@ class GroupDataAPIView(APIView):
         cursor = connection.cursor()
         cursor.execute(
             '''SELECT group_id,group_name,created_at FROM core_groups''')
+        return JsonResponse(dictfetchall(cursor), safe=False)
+
+
+class FetchUserGroups(APIView):
+    def post(self, request):
+        data = request.data
+        if data['user_id'] == '':
+            raise exceptions.APIException("User ID is required.")
+        cursor = connection.cursor()
+        cursor.execute(
+            '''SELECT gm_id, core_groupmembers.group_id,group_name,user_id,joined_at FROM core_groupmembers INNER JOIN core_groups ON core_groupmembers.group_id = core_groups.group_id WHERE core_groupmembers.user_id = %(select_cond)s''', params={'select_cond': data['user_id']})
         return JsonResponse(dictfetchall(cursor), safe=False)
 
 
