@@ -5,7 +5,7 @@ from rest_framework import exceptions
 from core.authentication import create_access_token, JWTAuthentication, create_refresh_token, decode_refresh_token
 from rest_framework.authentication import get_authorization_header
 from core.models import User, Posts, UserGallery, UserFriends
-from .serializers import GroupSerializer, PostsSerializer, ProfileSerializer, UserGalleriesSerializer, UserSerializer, UserFriendsSerializer, CreateGroupSerializer, JoinGroupSerializer, UserFollowersSerializer
+from .serializers import AcceptUserFriendsSerializer, GroupSerializer, PostsSerializer, ProfileSerializer, UserGalleriesSerializer, UserSerializer, UserFriendsSerializer, CreateGroupSerializer, JoinGroupSerializer, UserFollowersSerializer
 from django.http import JsonResponse
 from django.forms.models import model_to_dict
 from django.core import serializers
@@ -315,8 +315,7 @@ class FetchUserFriendsAPIView(APIView):
             '''SELECT user_id,first_name,last_name,friend_id,status FROM core_userfriends INNER JOIN core_user ON core_userfriends.friend_id = core_user.id WHERE core_userfriends.user_id = %(select_cond)s''', params={'select_cond': data['user_id']})
         return JsonResponse(dictfetchall(cursor), safe=False)
 
-
-class FetchUserFriendsRequestAPIView(APIView):
+class FetchUserFriendsOnlyAPIView(APIView):
     def post(self, request):
         data = request.data
         if data['user_id'] == '':
@@ -329,6 +328,53 @@ class FetchUserFriendsRequestAPIView(APIView):
             '''SELECT user_id,first_name,last_name,friend_id,status FROM core_userfriends INNER JOIN core_user ON core_userfriends.user_id = core_user.id WHERE core_userfriends.friend_id = %(select_cond)s''', params={'select_cond': data['user_id']})
         return JsonResponse(dictfetchall(cursor), safe=False)
 
+
+class FetchUserFriendsRequestAPIView(APIView):
+    def post(self, request):
+        data = request.data
+        if data['user_id'] == '':
+            raise exceptions.APIException("User ID is required.")
+        # friends = UserFriends.objects.filter(user_id=data['user_id'])
+        # serializer = UserFriendsSerializer(friends, many=True)
+        # return Response(serializer.data, status=status.HTTP_200_OK)
+        cursor = connection.cursor()
+        cursor.execute(
+            '''SELECT frnd_id,user_id,first_name,last_name,friend_id,status FROM core_userfriends INNER JOIN core_user ON core_userfriends.user_id = core_user.id WHERE core_userfriends.friend_id = %(select_cond)s and core_userfriends.status = 0''', params={'select_cond': data['user_id']})
+        return JsonResponse(dictfetchall(cursor), safe=False)
+
+class FetchUserFriendsSentRequestAPIView(APIView):
+    def post(self, request):
+        data = request.data
+        if data['user_id'] == '':
+            raise exceptions.APIException("User ID is required.")
+        cursor = connection.cursor()
+        cursor.execute(
+            '''SELECT frnd_id,user_id,first_name,last_name,friend_id,status FROM core_userfriends INNER JOIN core_user ON core_userfriends.friend_id = core_user.id WHERE core_userfriends.user_id = %(select_cond)s and core_userfriends.status = 0''', params={'select_cond': data['user_id']})
+        return JsonResponse(dictfetchall(cursor), safe=False)
+
+class UpdateFriendRequestAPIView(APIView):
+    def put(self, request, pk):
+        friends = UserFriends.objects.get(pk=pk)
+        serializer = AcceptUserFriendsSerializer(
+            friends, data=request.data, context={'request': request})
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        non_field_errors = serializer.errors.get('non_field_errors', None)
+        if non_field_errors:
+            return Response({'non_field_errors': non_field_errors}, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class DeleteFriendRequestAPIView(APIView):
+    def delete(self, request, pk):
+        try:
+            instance = UserFriends.objects.get(pk=pk)
+            instance.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except Posts.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+#//////////////////////////////////////////////////////////////////////////////////
 
 class GroupDataAPIView(APIView):
     def get(self, request):

@@ -21,6 +21,13 @@
                     </div>
                 </div>
             </div>
+            <div class="friend-section" *ngFor="let friend of friends2" >
+                <div class="d-flex flex-row list-container" *ngIf="friend.status == 1">
+                    <div class="name-holder">
+                        <p>{{friend.first_name}} {{friend.last_name}}</p>
+                    </div>
+                </div>
+            </div>
             <div class="p-1 ps-2 mt-4">
                 <div class="fr-container">
                     <p class="fr-head">Friend Request</p>
@@ -32,14 +39,46 @@
                         <p>{{friend.first_name}} {{friend.last_name}}</p>
                     </div>
                     <div class="p-1 ms-auto">
-                        <button class="btn btn-light">Accept</button>
+                        <button class="btn btn-light" (click)="AcceptFriendRequest(friend.frnd_id)">Accept</button>
                     </div>
                 </div>
             </div>
             <div class="p-1 ps-2 mt-4">
                 <div class="fr-container">
+                    <p class="fr-head">Sent Request</p>
+                </div>
+            </div>
+            <div class="friend-section" *ngFor="let friend of sentRequests">
+                <div class="d-flex flex-row list-container">
+                    <div class="name-holder">
+                        <p>{{friend.first_name}} {{friend.last_name}}</p>
+                    </div>
+                    <div class="p-1 ms-auto">
+                        <button class="btn btn-light" (click)="CancelFriendRequest(friend.frnd_id)">Cancel Request</button>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="p-1 ps-2 mt-4">
+                <div class="fr-container">
                     <p class="fr-head">You may know</p>
                 </div>
+            </div> -->
+            <!-- <div class="friend-section" *ngFor="let user of users">
+                <div class="d-flex flex-row list-container" *ngIf="user.id != UserId">
+                    <div class="name-holder">
+                        <p>{{user.first_name}} {{user.last_name}}</p>
+                    </div>
+                    <div class="p-1 ms-auto">
+                        <button class="btn btn-light" (click)="AddFriend(user.id)">Add friend</button>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+    </div>
+    <div class="col-md-5 sub-section">
+        <div class="mt-3 fade-container-list">
+            <div class="fd-header">
+                <h4>You may know</h4>
             </div>
             <div class="friend-section" *ngFor="let user of users">
                 <div class="d-flex flex-row list-container" *ngIf="user.id != UserId">
@@ -49,26 +88,6 @@
                     <div class="p-1 ms-auto">
                         <button class="btn btn-light" (click)="AddFriend(user.id)">Add friend</button>
                     </div>
-                </div>
-            </div>
-            <!-- <div class="d-flex flex-row list-container">
-                <div class="name-holder">
-                    <p>Vincent Guerzon</p>
-                </div>
-            </div> -->
-        </div>
-    </div>
-    <div class="col-md-5 sub-section">
-        <div class="mt-3 fade-container-list">
-            <div class="fd-header">
-                <h4>Friends</h4>
-            </div>
-            <div class="fd-body">
-                <div class="p-1">
-                    <p>Keith Roxas</p>
-                </div>
-                <div class="p-1">
-                    <p>Vincent Guerzon</p>
                 </div>
             </div>
         </div>

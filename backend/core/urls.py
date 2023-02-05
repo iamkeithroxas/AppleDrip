@@ -1,7 +1,7 @@
 from django.conf.urls.static import static
 from django.urls import path
 from django.conf import settings
-from .views import DeleteFollowerAPIView, DeleteMessageAPIView, FetchFollowingAPIView, FetchMessageAPIView, FetchPostAPIView, FetchProfilePostAPIView, FetchUserFriendsRequestAPIView, FetchUserFriendsAPIView, FetchUserGroups, FollowerAPIView, UpdateMessageAPIView, UpdateUserAPIView, UserMessageAPIView, UsersAPIView, DeleteGalleriesAPIView, DeleteMemberAPIView, FetchPostsAPIView, GroupDataAPIView, GroupDeleteAPIView, LogoutAPIView, PostDeleteAPIView, PostsAPIView, RefreshAPIView, RegisterAPIView, LoginApiView, UpdateGroupNameAPIView, UpdatePostAPIView, UserApiView, UserGalleriesAPIView, UserFriendsAPIView, CreateGroupAPIView, JoinGroupAPIView
+from .views import DeleteFollowerAPIView, DeleteFriendRequestAPIView, DeleteMessageAPIView, FetchFollowingAPIView, FetchMessageAPIView, FetchPostAPIView, FetchProfilePostAPIView, FetchUserFriendsOnlyAPIView, FetchUserFriendsRequestAPIView, FetchUserFriendsAPIView, FetchUserFriendsSentRequestAPIView, FetchUserGroups, FollowerAPIView, UpdateFriendRequestAPIView, UpdateMessageAPIView, UpdateUserAPIView, UserMessageAPIView, UsersAPIView, DeleteGalleriesAPIView, DeleteMemberAPIView, FetchPostsAPIView, GroupDataAPIView, GroupDeleteAPIView, LogoutAPIView, PostDeleteAPIView, PostsAPIView, RefreshAPIView, RegisterAPIView, LoginApiView, UpdateGroupNameAPIView, UpdatePostAPIView, UserApiView, UserGalleriesAPIView, UserFriendsAPIView, CreateGroupAPIView, JoinGroupAPIView
 
 urlpatterns = [
     path('register', RegisterAPIView.as_view()),
@@ -19,8 +19,13 @@ urlpatterns = [
     path('delete_gallery/<int:pk>/', DeleteGalleriesAPIView.as_view()),
 
     path('fetch_friends', FetchUserFriendsAPIView.as_view()),
+    path('get_friends', FetchUserFriendsOnlyAPIView.as_view()),
     path('fetch_friend_request', FetchUserFriendsRequestAPIView.as_view()),
+    path('fetch_sent_request', FetchUserFriendsSentRequestAPIView.as_view()),
     path('Addfriend', UserFriendsAPIView.as_view()),
+    path('accept_request/<int:pk>/', UpdateFriendRequestAPIView.as_view()),
+    path('delete_request/<int:pk>/', DeleteFriendRequestAPIView.as_view()),
+
     path('creategroup', CreateGroupAPIView.as_view()),
     path('joingroup', JoinGroupAPIView.as_view()),
     path('groups', GroupDataAPIView.as_view()),

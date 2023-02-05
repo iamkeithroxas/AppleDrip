@@ -43,6 +43,11 @@ class UserFriendsSerializer(ModelSerializer):
         model = UserFriends
         fields = ['user_id', 'friend_id', 'status']
 
+class AcceptUserFriendsSerializer(ModelSerializer):
+    class Meta:
+        model = UserFriends
+        fields = ['status']
+
 
 class CreateGroupSerializer(ModelSerializer):
     class Meta:

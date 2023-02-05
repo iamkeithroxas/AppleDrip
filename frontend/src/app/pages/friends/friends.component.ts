@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FriendsService } from '../service/friends.service';
 import { UserModel } from '../model/users-model';
 import { FriendModel } from '../model/friend-model';
+import { FriendRequestModel } from '../model/friend-request';
 
 @Component({
   selector: 'app-friends',
@@ -10,12 +11,15 @@ import { FriendModel } from '../model/friend-model';
 })
 export class FriendsComponent {
   users: UserModel[] = [];
-  friendRequest: UserModel[] = [];
+  friendRequest: FriendRequestModel[] = [];
   friends: FriendModel[] = [];
-
+  friends2: FriendModel[] = [];
+  sentRequests: FriendRequestModel[] = [];
   globalFriendRequestData = [];
+  sentRequest = [];
   globalUserData = [];
   globalFriendData = [];
+  globalFriendData2 = [];
   UserId: number = 1;
   firstname?: string;
   lastname?: string;
@@ -26,7 +30,9 @@ export class FriendsComponent {
   ngOnInit(): void {
     this.getUserProfile();
     this.fetchFriends();
+    this.fetchingFriends()
     this.fetchUsers();
+    
   }
 
   fetchUsers() {
@@ -48,6 +54,23 @@ export class FriendsComponent {
       });
   }
 
+  fetchSentRequest(){
+    this.service.fetchSentRequest({'user_id': this.UserId}).subscribe(data => {
+      console.log(data, 'request')
+      this.sentRequest = data
+      this.sentRequests = data
+    })
+  }
+
+  fetchingFriends(){
+    this.service
+      .fetchingUserFriends({ user_id: this.UserId })
+      .subscribe((data) => {
+        this.friends2 = data;
+        this.globalFriendData2 = data
+      });
+  }
+
   getUserProfile() {
     var data = JSON.parse(localStorage.getItem('user')!);
     console.log(data);
@@ -65,9 +88,12 @@ export class FriendsComponent {
       this.globalFriendRequestData = data;
       this. friendRequest = data
       console.log(this.globalFriendRequestData, 'po');
+      this.fetchSentRequest();
       this.checkUserFriend();
     });
   }
+
+
 
   checkUserFriend() {
     let array = this.globalUserData;
@@ -76,23 +102,14 @@ export class FriendsComponent {
     console.log(this.globalFriendRequestData, 'friendreq');
     var data = [];
     for (let x = 0; x < array.length; x++) {
-      for (let i = 0; i < array2.length; i++) {
-        if (array[x]['id'] != array2[i]['friend_id'] && array2[i]['status'] == 1) {
-          if (
-            !this.checkItemOnArray(
-              this.globalFriendRequestData,
-              array[x]['id']
-            ) &&
-            !this.checkItemOnArray(this.globalFriendRequestData, array[x]['id'])
-          )
-            data.push({
-              id: array[x]['id'],
-              first_name: array[x]['first_name'],
-              last_name: array[x]['last_name'],
-              email: array[x]['email'],
-              date_joined: array[x]['date_joined'],
-            });
-        }
+      if(!this.checkItemOnArray(this.globalFriendRequestData,array[x]['id']) && !this.checkFriendRequest(this.sentRequest,array[x]['id']) && !this.checkFriendRequest(this.globalFriendData,array[x]['id'])&& !this.checkItemOnArray(this.globalFriendData2,array[x]['id'])){
+        data.push({
+                    id: array[x]['id'],
+                    first_name: array[x]['first_name'],
+                    last_name: array[x]['last_name'],
+                    email: array[x]['email'],
+                    date_joined: array[x]['date_joined'],
+                  });
       }
     }
     console.log(data, 'ey');
@@ -110,9 +127,40 @@ export class FriendsComponent {
     return isTrue;
   }
 
+  checkFriendRequest(array: any, value: any) {
+    var isTrue = null;
+    for (var x = 0; x < array.length; x++) {
+      if (array[x]['friend_id'] == value) {
+        isTrue = true;
+        break;
+      }
+    }
+    return isTrue;
+  }
+
+
+
   AddFriend(e: any) {
     this.service.createFriendRequest({'user_id': this.UserId, "friend_id": e}).subscribe(data => {
-        this.FetchUserFriendRequest();
+      this.fetchFriends();
+      this.fetchingFriends()
+      this.fetchUsers();
+    })
+  }
+
+  AcceptFriendRequest(pk: number) {
+    this.service.AcceptFriendRequest(pk, {'status': 1}).subscribe(data => {
+      this.fetchFriends();
+      this.fetchingFriends()
+      this.fetchUsers();
+    })
+  }
+
+  CancelFriendRequest(pk: number) {
+    this.service.CancelFriendRequest(pk).subscribe(data => {
+      this.fetchFriends();
+      this.fetchingFriends()
+      this.fetchUsers();
     })
   }
 
